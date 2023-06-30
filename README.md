@@ -2,7 +2,8 @@
 
 # R1 Identification of the *problem* you are trying to solve by building this particular *app*.
 
-This app 
+This app for organising 
+
 Because of the Covid-19 pandemic, fewer people visited dog parks. 
 
 # R2 Why is it a *problem* that needs solving?
@@ -50,7 +51,7 @@ Models include:
 - events
 
 Relationships:
-- Users have a one to many relationship with dogs
+- Users can have more than one dog, so the User/s model has a a one-to-many relationship with the Dogs model
 - Users have a one to many relationship with dog parks
 - Users have a one to many relationship with events
 - Dogs have a one to many relationship with dog parks
