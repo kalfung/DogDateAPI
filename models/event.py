@@ -15,7 +15,8 @@ class Event(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
     event_creator = db.relationship('User', back_populates='events_created')
 
-    attendees = db.relationship('User', secondary='event_user', back_populates='events_attending')
+    # relationship between events and the attendees NOT WORKING
+    # attendees = db.relationship('User', secondary='event_user', back_populates='events_attending')
 
     park_id = db.Column(db.Integer(), db.ForeignKey('parks.id'), nullable=False)
     # park = db.relationship('Park', back_populates='events')

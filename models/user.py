@@ -19,8 +19,9 @@ class User(db.Model):
     dogs = db.relationship('Dog', back_populates='owner', cascade='all, delete')
     # Relationship between users and the events they create
     events_created = db.relationship('Event', back_populates='event_creator', cascade='all, delete')
-    # Relationship between users and the events they are attending
-    events_attending = db.relationship('Event', secondary='event_user', back_populates='attendees')
+    
+    # Relationship between users and the events they are attending NOT WORKING
+    # events_attending = db.relationship('Event', secondary='event_user', back_populates='attendees')
     
 class UserSchema(ma.Schema):
     # Telling Marshmallow to use UserSchema to serialise the 'dogs' and 'events_created' fields
