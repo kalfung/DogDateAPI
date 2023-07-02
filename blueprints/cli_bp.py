@@ -14,6 +14,7 @@ from models.event_user import Event_User
 
 cli_bp = Blueprint('db', __name__)
 
+# CLI command to delete existing tables in DB and create new tables
 @cli_bp.cli.command('create')
 def create_tables():
     db.drop_all()
@@ -25,6 +26,7 @@ def delete_tables():
     db.drop_all()
     print('Deleted DogDateAPI tables')
 
+# CLI command to seed the users table
 @cli_bp.cli.command('seed_users')
 def seed_users():
     users = [

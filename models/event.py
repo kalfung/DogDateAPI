@@ -11,3 +11,7 @@ class Event(db.Model):
 
     park_id = db.Column(db.Integer(), db.ForeignKey('parks.id'), nullable=False)
     # park = db.relationship('Park', back_populates='events')
+
+class EventSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'title', 'description', 'date_time', 'park_id')

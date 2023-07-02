@@ -10,3 +10,7 @@ class Park(db.Model):
     longitude = db.Column(db.Float(), nullable=False)
     date_created = db.Column(db.Date(), nullable=False)
     date_updated = db.Column(db.Date(), nullable=False)
+
+class ParkSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'name', 'latitude', 'longitude')

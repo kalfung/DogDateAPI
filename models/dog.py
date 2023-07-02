@@ -16,4 +16,4 @@ class Dog(db.Model):
 
 class DogSchema(ma.Schema):
     class Meta:
-        fields = ('name', 'gender', 'breed', 'age', 'size', 'user')
+        fields = ('name', 'gender', 'breed', 'age', 'size', 'user_id')
