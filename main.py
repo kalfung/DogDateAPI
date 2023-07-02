@@ -2,6 +2,7 @@ from os import environ
 
 from flask import Flask
 from init import db, ma, jwt, bcrypt
+from blueprints.cli_bp import cli_bp
 
 def setup():
     # Creating instance of Flask object
@@ -9,7 +10,7 @@ def setup():
 
     # Flask configuration
     # Setting database location with the DB URI
-    app.config['SQLALECHEMY_DATEBASE_URI'] = environ.get('DB_URI')
+    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URI')
     # JWT secret key
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_KEY')
 
@@ -18,6 +19,9 @@ def setup():
     ma.init_app(app)
     jwt.init_app(app)
     bcrypt.init_app(app)
+
+    # Registering blueprints with the app object
+    app.register_blueprint(cli_bp)
 
     @app.get("/")
     def home():

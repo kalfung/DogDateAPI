@@ -1,6 +1,6 @@
 from init import db, ma
 
-class EventUser(db.Model):
+class Event_User(db.Model):
     __tablename__ = 'events_users'
 
     id = db.Column(db.Integer, primary_key=True)

@@ -18,7 +18,7 @@ class User(db.Model):
 class UserSchema(ma.Schema):
     dogs = fields.List(fields.Nested('DogSchema', exclude=['user', 'id', 'user_id']))
     # NEED TO add schema for parksusers
-    parks = fields.List(fields.Nested) 
+    # parks = fields.List(fields.Nested) 
 
     class Meta:
         fields = ('f_name', 'email', 'dogs', 'parks')
