@@ -1,4 +1,3 @@
-from datetime import date
 from time import time
 
 from flask import Blueprint
@@ -11,6 +10,7 @@ from models.park import Park
 from models.event import Event
 from models.park_user import Park_User
 from models.event_user import Event_User
+from blueprints.seed_data import users # dogs, parks, events
 
 cli_bp = Blueprint('db', __name__)
 
@@ -21,6 +21,7 @@ def create_tables():
     db.create_all()
     print('Created DogDateAPI tables')
 
+# CLI command to delete existing tables in DB
 @cli_bp.cli.command('delete_tables')
 def delete_tables():
     db.drop_all()
@@ -29,27 +30,30 @@ def delete_tables():
 # CLI command to seed the users table
 @cli_bp.cli.command('seed_users')
 def seed_users():
-    users = [
-        User(
-            email = 'admin@dogdate.com',
-            username = 'Administrator',
-            f_name = 'Ad',
-            l_name = 'Ministrator',
-            password = bcrypt.generate_password_hash('golden123').decode('utf8'),
-            is_admin = True,
-            date_created = date.today()
-        ),
-        User(
-            email = 'clark.kent@dailyplanet.com',
-            username = 'sonofkrypton',
-            f_name = 'Clark',
-            l_name = 'Kent',
-            password = bcrypt.generate_password_hash('fortressofsolitude').decode('utf8'),
-            date_created = date.today()
-        )
-    ]
+    
 
     db.session.query(User).delete()
     db.session.add_all(users)
     db.session.commit()
     print('Users seeded successfully')
+
+# CLI command to seed remaining non junction tables
+@cli_bp.cli.command('seed_tables')
+def seed_tables():
+    # Dogs
+    db.session.query(Dog).delete()
+    db.session.add_all(dogs)
+    db.session.commit()
+    print('Seeded dogs successfully')
+
+    # Parks
+    db.session.query(Park).delete()
+    db.session.add_all(parks)
+    db.session.commit()
+    print('Seeded parks successfully')
+
+    # Events
+    db.session.query(Event).delete()
+    db.session.add_all(events)
+    db.session.commit()
+    print('Seeded events successfully')
