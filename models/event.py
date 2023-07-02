@@ -7,7 +7,8 @@ class Event(db.Model):
 
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
-    date_time = db.Column(db.DateTime, nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    time = db.Column(db.Time, nullable=False)
 
     park_id = db.Column(db.Integer(), db.ForeignKey('parks.id'), nullable=False)
     # park = db.relationship('Park', back_populates='events')

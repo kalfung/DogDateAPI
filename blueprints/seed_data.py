@@ -6,6 +6,7 @@ from models.dog import Dog
 from models.park import Park
 from models.event import Event
 
+# seed data for users
 users = [
     User(
         email = 'admin@dogdate.com',
@@ -33,11 +34,11 @@ users = [
         date_created = date.today()
     ),
     User(
-        email = 'kal.el@krypton.com',
-        username = 'truesonofkrypton',
-        f_name = 'Kal',
-        l_name = 'El',
-        password = bcrypt.generate_password_hash('krpytonite').decode('utf8'),
+        email = 'brucewayne@wayneenterprises.com',
+        username = 'darkknight',
+        f_name = 'Bruce',
+        l_name = 'Wayne',
+        password = bcrypt.generate_password_hash('crimealley').decode('utf8'),
         date_created = date.today()
     ),
     User(
@@ -71,10 +72,76 @@ users = [
         l_name = 'West',
         password = bcrypt.generate_password_hash('redandyellow').decode('utf8'),
         date_created = date.today()
+    )    
+]
+
+# seed data for dogs
+dogs = [
+    Dog(
+        name = 'Krypto',
+        gender = 'Male',
+        breed = 'Labrador',
+        age = 30,
+        size = 'Large',
+        user_id = 2
+    ),
+    Dog(
+        name = 'Speedy',
+        gender = 'Male',
+        breed = 'Greyhound',
+        age = 3,
+        size = 'Large',
+        user_id = 8
+    ),
+    Dog(
+        name = 'Ace',
+        gender = 'Male',
+        breed = 'Rottweiler',
+        age = 5,
+        size = 'Large',
+        user_id = 4
+    ),
+    Dog(
+        name = 'Shifty',
+        gender = 'Female',
+        breed = 'Husky',
+        age = 3,
+        size = 'Large',
+        user_id = 6
+    ),
+    Dog(
+        name = 'Bumper',
+        gender = 'Male',
+        breed = 'Golden Retriever',
+        age = 9,
+        size = 'Large',
+        user_id = 5
+    ),
+    Dog(
+        name = 'Bella',
+        gender = 'Female',
+        breed = 'French Bulldog',
+        age = 6,
+        user_id = 5
+    ),
+    Dog(
+        name = 'Athena',
+        gender = 'Female',
+        breed = 'German Shepherd',
+        age = 7,
+        size = 'Large',
+        user_id = 7
+    ),
+    Dog(
+        name = 'Scoop',
+        gender = 'Female',
+        breed = 'Beagle',
+        age = 3,
+        user_id = 3
     )
 ]
 
-# dogs
+# seed data for parks
 parks = [
     Park(
         name = 'Belmore Dog Park',
@@ -98,4 +165,28 @@ parks = [
         date_updated = date.today()
     )
 ]
-# events
+
+# seed data for events
+events = [
+    Event(
+        title = 'Super Pets Meetup',
+        description = 'Meetup for superheroes and their dogs',
+        date = '2023-08-31',
+        time = '09:00:00',
+        park_id = 2
+    ),
+    Event(
+        title = 'Big dogs Meetup',
+        description = 'Meetup for owners of large dogs',
+        date = '2023-09-30',
+        time = '09:00:00',
+        park_id = 3
+    ),
+    Event(
+        title = 'Retrievers meetup',
+        description = 'Meetup for owners of labrador and golden retrievers',
+        date = '2023-09-30',
+        time = '15:00:00',
+        park_id = 1
+    )
+]
