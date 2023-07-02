@@ -21,7 +21,7 @@ class User(db.Model):
     events_created = db.relationship('Event', back_populates='event_creator', cascade='all, delete')
     
     # Relationship between users and the events they are attending NOT WORKING
-    # events_attending = db.relationship('Event', secondary='event_user', back_populates='attendees')
+    # events_attending = db.relationship('Event', secondary='event_user', backref='attendees')
     
 class UserSchema(ma.Schema):
     # Telling Marshmallow to use UserSchema to serialise the 'dogs' and 'events_created' fields
@@ -31,4 +31,4 @@ class UserSchema(ma.Schema):
 #     # parks = fields.List(fields.Nested) 
 
     class Meta:
-        fields = ('email', 'username', 'f_name', 'password', 'is_admin', 'dogs')
+        fields = ('email', 'username', 'f_name', 'password', 'is_admin', 'dogs', 'events_created')

@@ -1,4 +1,5 @@
 from init import db, ma
+from marshmallow import fields
 
 class Park(db.Model):
     __tablename__= 'parks'
@@ -15,5 +16,6 @@ class Park(db.Model):
     events = db.relationship('Event', back_populates='park', cascade='all, delete')
 
 class ParkSchema(ma.Schema):
+    events = fields.List(fields.Nested('EventSchema', exclude=['id', 'park_id']))
     class Meta:
         fields = ('id', 'name', 'latitude', 'longitude')

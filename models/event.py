@@ -15,16 +15,17 @@ class Event(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
     event_creator = db.relationship('User', back_populates='events_created')
 
-    # relationship between events and the venue NOT WORKING
+    # relationship between events and the venue
     park_id = db.Column(db.Integer(), db.ForeignKey('parks.id'), nullable=False)
     park = db.relationship('Park', back_populates='events')
 
     # relationship between events and the attendees NOT WORKING
-    # attendees = db.relationship('User', secondary='event_user', back_populates='events_attending')
+    # attendees = db.relationship('User', secondary='event_user', backref='events_attending')
 
     def __repr__(self):
         return f'<Event "{self.title}">'
 
 class EventSchema(ma.Schema):
+    
     class Meta:
         fields = ('id', 'title', 'description', 'date_time', 'park_id', 'user_id')
