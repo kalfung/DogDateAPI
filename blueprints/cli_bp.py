@@ -10,7 +10,7 @@ from models.park import Park
 from models.event import Event
 from models.park_user import Park_User
 from models.event_user import Event_User
-from blueprints.seed_data import users, parks, dogs, events
+from blueprints.seed_data import users, parks, dogs, events, events_users
 
 cli_bp = Blueprint('db', __name__)
 
@@ -63,5 +63,11 @@ def seed_tables():
     db.session.add_all(events)
     db.session.commit()
     print('Seeded events successfully')
+
+    # Events_users
+    db.session.query(Event_User).delete()
+    db.session.add_all(events_users)
+    db.session.commit()
+    print('Seeded events_users successfully')
 
     print('All data seeded successfully')

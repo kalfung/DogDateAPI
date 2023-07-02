@@ -5,6 +5,7 @@ from models.user import User
 from models.dog import Dog
 from models.park import Park
 from models.event import Event
+from models.event_user import Event_User
 
 # seed data for users
 users = [
@@ -148,21 +149,21 @@ parks = [
         latitude = -33.914696, 
         longitude = 151.096235,
         date_registered = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Park(
         name = 'Enmore Dog Park',
         latitude = -33.902398, 
         longitude = 151.174394,
         date_registered = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Park(
         name = 'Sydenham Dog Park',
         latitude = -33.916021, 
         longitude = 151.168344,
         date_registered = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     )
 ]
 
@@ -194,8 +195,71 @@ events = [
     )
 ]
 
+# seed data for events_users
 events_users = [
     Event_User(
-        
+        event_id = 1,
+        user_id = 2,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 1,
+        user_id = 4,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 1,
+        user_id = 6,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 1,
+        user_id = 7,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 1,
+        user_id = 8,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 2,
+        user_id = 2,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 2,
+        user_id = 4,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 2,
+        user_id = 5,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 2,
+        user_id = 6,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 2,
+        user_id = 7,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 2,
+        user_id = 8,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 3,
+        user_id = 2,
+        date_created = date.today()
+    ),
+    Event_User(
+        event_id = 3,
+        user_id = 5,
+        date_created = date.today()
     )
 ]
