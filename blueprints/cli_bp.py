@@ -34,7 +34,20 @@ def seed_users():
             f_name = 'Ad',
             l_name = 'Ministrator',
             password = bcrypt.generate_password_hash('golden123').decode('utf8'),
-            is_admin = True
-
+            is_admin = True,
+            date_created = date.today()
+        ),
+        User(
+            email = 'clark.kent@dailyplanet.com',
+            username = 'sonofkrypton',
+            f_name = 'Clark',
+            l_name = 'Kent',
+            password = bcrypt.generate_password_hash('fortressofsolitude').decode('utf8'),
+            date_created = date.today()
         )
     ]
+
+    db.session.query(User).delete()
+    db.session.add_all(users)
+    db.session.commit()
+    print('Users seeded successfully')

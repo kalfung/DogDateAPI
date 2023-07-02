@@ -12,7 +12,7 @@ class Dog(db.Model):
     size = db.Column(db.String, nullable=False, default='Small')
 
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    user = db.relationship('User', back_populates='dogs')
+    # user = db.relationship('User', back_populates='dogs')
 
 class DogSchema(ma.Schema):
     class Meta:

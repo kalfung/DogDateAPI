@@ -15,10 +15,10 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     date_created = db.Column(db.Date, nullable=False)
 
-class UserSchema(ma.Schema):
-    dogs = fields.List(fields.Nested('DogSchema', exclude=['user', 'id', 'user_id']))
-    # NEED TO add schema for parksusers
-    # parks = fields.List(fields.Nested) 
+# class UserSchema(ma.Schema):
+#     dogs = fields.List(fields.Nested('DogSchema', exclude=['user', 'id', 'user_id']))
+#     # NEED TO add schema for parksusers
+#     # parks = fields.List(fields.Nested) 
 
-    class Meta:
-        fields = ('f_name', 'email', 'dogs', 'parks')
+#     class Meta:
+#         fields = ('f_name', 'email', 'dogs', 'parks')

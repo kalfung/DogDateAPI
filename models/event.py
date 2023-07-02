@@ -1,7 +1,7 @@
-from init import db
+from init import db, ma
 
 class Event(db.Model):
-    __tablename__= "events"
+    __tablename__= 'events'
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -10,4 +10,4 @@ class Event(db.Model):
     date_time = db.Column(db.DateTime, nullable=False)
 
     park_id = db.Column(db.Integer(), db.ForeignKey('parks.id'), nullable=False)
-    park = db.relationship('Park', back_populates='events')
+    # park = db.relationship('Park', back_populates='events')
