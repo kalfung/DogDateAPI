@@ -1,4 +1,5 @@
 from init import db, ma
+from marshmallow import fields
 
 class Event(db.Model):
     __tablename__= 'events'
@@ -10,6 +11,7 @@ class Event(db.Model):
     date = db.Column(db.Date, nullable=False)
     time = db.Column(db.Time, nullable=False)
 
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
     park_id = db.Column(db.Integer(), db.ForeignKey('parks.id'), nullable=False)
     # park = db.relationship('Park', back_populates='events')
 

@@ -147,21 +147,21 @@ parks = [
         name = 'Belmore Dog Park',
         latitude = -33.914696, 
         longitude = 151.096235,
-        date_created = date.today(),
+        date_registered = date.today(),
         date_updated = date.today()
     ),
     Park(
         name = 'Enmore Dog Park',
         latitude = -33.902398, 
         longitude = 151.174394,
-        date_created = date.today(),
+        date_registered = date.today(),
         date_updated = date.today()
     ),
     Park(
         name = 'Sydenham Dog Park',
         latitude = -33.916021, 
         longitude = 151.168344,
-        date_created = date.today(),
+        date_registered = date.today(),
         date_updated = date.today()
     )
 ]
@@ -173,6 +173,7 @@ events = [
         description = 'Meetup for superheroes and their dogs',
         date = '2023-08-31',
         time = '09:00:00',
+        user_id = 4,
         park_id = 2
     ),
     Event(
@@ -180,6 +181,7 @@ events = [
         description = 'Meetup for owners of large dogs',
         date = '2023-09-30',
         time = '09:00:00',
+        user_id = 2,
         park_id = 3
     ),
     Event(
@@ -187,6 +189,13 @@ events = [
         description = 'Meetup for owners of labrador and golden retrievers',
         date = '2023-09-30',
         time = '15:00:00',
+        user_id = 5,
         park_id = 1
+    )
+]
+
+events_users = [
+    Event_User(
+        
     )
 ]
