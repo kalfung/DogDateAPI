@@ -10,11 +10,19 @@ class Event(db.Model):
     description = db.Column(db.String(1000), nullable=False)
     date = db.Column(db.Date, nullable=False)
     time = db.Column(db.Time, nullable=False)
-
+    
+    # relationship between events and the users that create them
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
+    event_creator = db.relationship('User', back_populates='events_created')
+
+    attendees = db.relationship('User', secondary='event_user', back_populates='events_attending')
+
     park_id = db.Column(db.Integer(), db.ForeignKey('parks.id'), nullable=False)
     # park = db.relationship('Park', back_populates='events')
 
+    def __repr__(self):
+        return f'<Event "{self.title}">'
+
 class EventSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'title', 'description', 'date_time', 'park_id')
+        fields = ('id', 'title', 'description', 'date_time', 'park_id', 'user_id')

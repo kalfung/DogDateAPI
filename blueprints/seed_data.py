@@ -197,6 +197,8 @@ events = [
 
 # seed data for events_users
 events_users = [
+    
+    # Attendees for event 1
     Event_User(
         event_id = 1,
         user_id = 2,
@@ -222,6 +224,8 @@ events_users = [
         user_id = 8,
         date_created = date.today()
     ),
+    
+    # Attendees for event 2
     Event_User(
         event_id = 2,
         user_id = 2,
@@ -252,6 +256,8 @@ events_users = [
         user_id = 8,
         date_created = date.today()
     ),
+    
+    # Attendees for event 3
     Event_User(
         event_id = 3,
         user_id = 2,

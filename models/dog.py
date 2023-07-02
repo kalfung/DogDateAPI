@@ -11,9 +11,10 @@ class Dog(db.Model):
     age = db.Column(db.Integer, nullable=False)
     size = db.Column(db.String, nullable=False, default='Small')
 
+    # Relationship between dogs and their owners
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    # user = db.relationship('User', back_populates='dogs')
+    owner = db.relationship('User', back_populates='dogs')
 
 class DogSchema(ma.Schema):
     class Meta:
-        fields = ('name', 'gender', 'breed', 'age', 'size', 'user_id')
+        fields = ('name', 'gender', 'breed', 'age', 'size', 'owner')
