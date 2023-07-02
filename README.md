@@ -1,8 +1,24 @@
 # DogDateAPI
 
+# Link to GitHub repository
+
+https://github.com/kalfung/DogDateAPI
+
+# Link to Trello board
+
+https://trello.com/b/e3F45Prp/t2a2-api-webserver-project
+
+# R0 Installation instructions
+
+```python
+
+```
+
 # R1 Identification of the *problem* you are trying to solve by building this particular *app*.
 
-This app for organising 
+This app is for organising dog play dates and meet-ups for dog owners.
+
+Some people, like myself, find it easier to meet new people through their dogs. This app will allow dog owners to arrange social events.
 
 Because of the Covid-19 pandemic, fewer people visited dog parks. 
 
@@ -31,6 +47,11 @@ pros vs cons compared to other systems
 /users/dogpark
 
 /users/park GET list of all users that frequent a specific dog park
+
+GET, POST, PUT, DELETE, PATCH
+
+CRUD create read update delete
+
 
 # R6 An ERD for your *app*
 
