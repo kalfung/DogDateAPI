@@ -10,8 +10,12 @@ https://trello.com/b/e3F45Prp/t2a2-api-webserver-project
 
 # R0 Installation instructions
 
-```python
+Clone this API repository from GitHub into your chosen folder.
 
+Connect to a 
+
+```
+psql
 ```
 
 # R1 Identification of the *problem* you are trying to solve by building this particular *app*.
