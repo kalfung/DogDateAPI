@@ -56,6 +56,21 @@ GET, POST, PUT, DELETE, PATCH
 
 CRUD create read update delete
 
+## Park
+
+### **GET** `/parks`
+
+Retrieves a list of all parks in the database. 
+
+- methods: **GET**
+- parameters: None
+- headers: Authorisation: {Bearer Token}
+- response: _200_
+- response: _401_
+
+![get all cards](./docs/postman/parks_GET.PNG)
+
+
 
 # R6 An ERD for your *app*
 
