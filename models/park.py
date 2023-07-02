@@ -11,6 +11,9 @@ class Park(db.Model):
     date_registered = db.Column(db.Date(), nullable=False)
     last_updated = db.Column(db.Date(), nullable=False)
 
+    # Relationship between parks and their events
+    events = db.relationship('Event', back_populates='park', cascade='all, delete')
+
 class ParkSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'latitude', 'longitude')
