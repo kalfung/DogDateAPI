@@ -269,3 +269,5 @@ events_users = [
         date_created = date.today()
     )
 ]
+
+# Seed data for parks_users to be added
