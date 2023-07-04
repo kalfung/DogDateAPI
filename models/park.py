@@ -16,6 +16,7 @@ class Park(db.Model):
     events = db.relationship('Event', back_populates='park', cascade='all, delete')
 
 class ParkSchema(ma.Schema):
+    # Telling marshmallow to use EventSchema to serialise 'events'
     events = fields.List(fields.Nested('EventSchema', exclude=['id', 'park_id']))
     class Meta:
-        fields = ('id', 'name', 'latitude', 'longitude')
+        fields = ('id', 'name', 'latitude', 'longitude', 'events')

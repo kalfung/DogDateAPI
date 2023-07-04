@@ -23,11 +23,14 @@ class User(db.Model):
     # Relationship between users and the events they are attending NOT WORKING
     # events_attending = db.relationship('Event', secondary='event_user', backref='attendees')
     
+    # Relationship between users and the parks they frequent 
+
 class UserSchema(ma.Schema):
-    # Telling Marshmallow to use UserSchema to serialise the 'dogs' and 'events_created' fields
+    # Telling Marshmallow to use DogSchema to serialise the 'dogs' field
     dogs = fields.List(fields.Nested('DogSchema', exclude=['user_id', 'owner']))
+    # Telling Marshmallow to use EventSchema to serialise the 'events_created' field
     events_created = fields.List(fields.Nested('EventSchema', exclude=['id', 'user_id']))
-#     # NEED TO add schema for parksusers
+#     # NEED TO add schema for parksusers i.e. parks_frequented
 #     # parks = fields.List(fields.Nested) 
 
     class Meta:

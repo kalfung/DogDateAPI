@@ -23,7 +23,7 @@ class Event(db.Model):
     # attendees = db.relationship('User', secondary='event_user', backref='events_attending')
 
     def __repr__(self):
-        return f'<Event "{self.title}">'
+        return f'<Event "{self.title} {self.description}">'
 
 class EventSchema(ma.Schema):
     # Tell Marshmallow to use UserSchema to serialise the 'event_creator' field
