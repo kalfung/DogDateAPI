@@ -7,7 +7,7 @@ from models.user import User, UserSchema
 
 auth_bp = Blueprint('auth', __name__)
 
-# GET all users
+# GET all users - READ request
 @auth_bp.route('/users')
 @jwt_required()
 def all_users():
@@ -16,7 +16,18 @@ def all_users():
     users = db.session.scalars(stmt).all()
     return UserSchema(many=True, exclude=['password']).dump(users)
 
-# Register a new user, POST request
+# GET one user - READ request
+@auth_bp.route('/users/<int:user_id>')
+@jwt_required()
+def one_user(user_id):
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if user:
+        return UserSchema(exclude=['password']).dump(user)
+    else:
+        return {'error': 'User not found'}, 404
+
+# POST a new user - CREATE request
 @auth_bp.route('/register', methods=['POST'])
 def register_user():
     try:
@@ -40,7 +51,7 @@ def register_user():
     except IntegrityError:
         return {'error': 'The email address is already in use'}, 409
     
-# Login route, POST request
+# POST login route - CREATE request
 @auth_bp.route('/login', methods=['POST'])
 def login():
     try:
@@ -57,7 +68,39 @@ def login():
             return {'error': 'Invalid email address or password'}, 401
     except KeyError:
         return {'error': 'Email and password are required'}, 401
-    
+
+# PUT or PATCH a user - UPDATE request
+@auth_bp.route('/users/<int:user_id>', methods=['PUT', 'PATCH'])
+@jwt_required()
+def update_user(user_id):
+    user_info = UserSchema().load(request.json)
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if user:
+        admin_required()
+        user.email = user_info.get('email', user.email)
+        user.username = user_info.get('username', user.username)
+        user.f_name = user_info.get('f_name', user.f_name)
+        user.l_name = user_info.get('l_name', user.l_name)
+        user.password = user_info.get(bcrypt.generate_password_hash('password').decode('utf8'), user.password)
+        db.session.commit()
+        return UserSchema(exclude=['is_admin']).dump(user)
+    else:
+        return {'error': 'User not found'}, 404
+
+# DELETE a user - DELETE request
+@auth_bp.route('/users/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if user:
+        admin_required() # the actual user themself should also be able to self-delete
+        db.session.delete(user)
+        db.session.commit()
+        return {'confirmation': 'User has been deleted'}, 200
+    else:
+        return {'error': 'User not found'}, 404
 
 # Creating an admin-only access method for admin-only routes
 def admin_required():
