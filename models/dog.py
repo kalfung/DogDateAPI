@@ -16,8 +16,8 @@ class Dog(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     owner = db.relationship('User', back_populates='dogs')
 
-    def __repr__(self):
-        return f'<DOG "{self.name}: {self.breed}">'
+    # def __repr__(self):
+    #     return f'<DOG "{self.name}: {self.breed}">'
 
 class DogSchema(ma.Schema):
     # Tell Marshmallow to use UserSchema to serialise the 'owner' field

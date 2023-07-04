@@ -3,7 +3,9 @@ from os import environ
 from flask import Flask
 from init import db, ma, jwt, bcrypt
 from blueprints.cli_bp import cli_bp
+from blueprints.auth_bp import auth_bp
 from blueprints.parks_bp import parks_bp
+
 
 def setup():
     # Creating instance of Flask object
@@ -23,6 +25,7 @@ def setup():
 
     # Registering blueprints with the app object
     app.register_blueprint(cli_bp)
+    app.register_blueprint(auth_bp)
     app.register_blueprint(parks_bp)
 
     @app.route("/")

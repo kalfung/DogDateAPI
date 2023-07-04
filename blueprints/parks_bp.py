@@ -14,6 +14,7 @@ def all_parks():
 
 # GET one park
 @parks_bp.route('/<int:park_id>')
+@parks_bp.route('/<int:park_id>/')
 def get_one_park(park_id):
     stmt = db.select(Park).filter_by(id=park_id)
     park = db.session.scalar(stmt)
