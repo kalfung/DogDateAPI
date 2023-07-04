@@ -2,19 +2,19 @@ from flask import Blueprint, request
 from init import db
 from models.park import Park, ParkSchema
 from datetime import date
+from flask_jwt_extended import jwt_required
 
 parks_bp = Blueprint('parks', __name__, url_prefix='/parks')
 
-# GET all parks
+# GET all parks - READ request
 @parks_bp.route('/')
 def all_parks():
     stmt = db.select(Park).order_by(Park.id) # could order_by name instead
     parks = db.session.scalars(stmt).all()
     return ParkSchema(many=True).dump(parks)
 
-# GET one park
+# GET one park - READ request
 @parks_bp.route('/<int:park_id>')
-@parks_bp.route('/<int:park_id>/')
 def get_one_park(park_id):
     stmt = db.select(Park).filter_by(id=park_id)
     park = db.session.scalar(stmt)
@@ -23,7 +23,7 @@ def get_one_park(park_id):
     else:
         return {'error': 'Park not found'}, 404
     
-# POST new park
+# POST new park - CREATE request
 @parks_bp.route('/', methods=['POST'])
 def create_park():
     # Load the incoming POST data via the schema
@@ -42,3 +42,20 @@ def create_park():
     db.session.commit()
     # Send the new park back to the client
     return ParkSchema().dump(park), 201
+
+# PUT or PATCH park - UPDATE request
+@parks_bp.route('/<int:park_id>', methods=['PUT', 'PATCH'])
+@jwt_required()
+def update_park(park_id):
+    # Load the incoming PUT or PATCH data via the schema
+    park_info = ParkSchema().load(request.json)
+    stmt = db.select(Park).filter_by(id=park_id)
+    park = db.session.scalar(stmt)
+    if park:
+        park.name = park_info.get('name', park.name)
+        park.latitude = park_info.get('latitude', park.latitude)
+        park.longitude = park_info.get('longitude', park.longitude)
+        park.last_updated = date.today()
+        db.session.commit()
+        return ParkSchema().dump(park)
+    else: return {'error': 'Park not found'}, 404
