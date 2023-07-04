@@ -3,6 +3,7 @@ from init import db
 from models.park import Park, ParkSchema
 from datetime import date
 from flask_jwt_extended import jwt_required
+from blueprints.auth_bp import admin_required
 
 parks_bp = Blueprint('parks', __name__, url_prefix='/parks')
 
@@ -52,10 +53,26 @@ def update_park(park_id):
     stmt = db.select(Park).filter_by(id=park_id)
     park = db.session.scalar(stmt)
     if park:
+        admin_required()
         park.name = park_info.get('name', park.name)
         park.latitude = park_info.get('latitude', park.latitude)
         park.longitude = park_info.get('longitude', park.longitude)
         park.last_updated = date.today()
         db.session.commit()
         return ParkSchema().dump(park)
-    else: return {'error': 'Park not found'}, 404
+    else: 
+        return {'error': 'Park not found'}, 404
+
+# DELETE a park - DELETE request
+@parks_bp.route('/<int:park_id>', methods=['DELETE'])
+@jwt_required()
+def delete_park(park_id):
+    stmt = db.select(Park).filter_by(id=park_id)
+    park = db.session.scalar(stmt)
+    if park:
+        admin_required()
+        db.session.delete(park)
+        db.session.commit()
+        return {'confirmation': 'Park deleted'}, 200
+    else:
+        return {'error': 'Park not found'}, 404
