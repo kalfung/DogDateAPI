@@ -1,7 +1,8 @@
 from flask import Blueprint, request
 from init import db, bcrypt
-from datetime import date
+from datetime import date, timedelta
 from sqlalchemy.exc import IntegrityError
+from flask_jwt_extended import create_access_token
 from models.user import User, UserSchema
 
 auth_bp = Blueprint('auth', __name__)
@@ -38,3 +39,23 @@ def register_user():
         return UserSchema(exclude=['password', 'is_admin']).dump(new_user), 201
     except IntegrityError:
         return {'error': 'The email address is already in use'}, 409
+    
+# Login route, POST request
+@auth_bp.route('/login', methods=['POST'])
+@auth_bp.route('/login/', methods=['POST'])
+def login():
+    try:
+        # stmt = db.select(User).filter_by(email=request.json['email'])
+        user_info = UserSchema().load(request.json)
+        stmt = db.select(User).filter_by(email=user_info['email'])
+        user = db.session.scalar(stmt)
+
+        # if user and bcrypt.check_password_hash(user.password, request.json['password']):
+        if user and bcrypt.check_password_hash(user.password, user_info['password']):
+            token = create_access_token(identity=user.id, expires_delta=timedelta(days=30))
+            print(token)
+            return {'token': token, 'user': UserSchema(exclude=['password', 'is_admin']).dump(user)}
+        else:
+            return {'error': 'Invalid email address or password'}, 401
+    except KeyError:
+        return {'error': 'Email and password are required'}, 401
