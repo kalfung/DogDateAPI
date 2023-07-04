@@ -1,4 +1,5 @@
 from init import db, ma
+from marshmallow import fields
 
 class Dog(db.Model):
     __tablename__= 'dogs'
@@ -16,5 +17,7 @@ class Dog(db.Model):
     owner = db.relationship('User', back_populates='dogs')
 
 class DogSchema(ma.Schema):
+    # Tell Marshmallow to use UserSchema to serialise the 'owner' field
+    owner = fields.List(fields.Nested('UserSchema', only=['username', 'f_name', 'is_admin']))
     class Meta:
-        fields = ('name', 'gender', 'breed', 'age', 'size', 'owner')
+        fields = ('id', 'name', 'gender', 'breed', 'age', 'size', 'owner')
