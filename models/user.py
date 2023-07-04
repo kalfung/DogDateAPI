@@ -34,4 +34,4 @@ class UserSchema(ma.Schema):
 #     # parks = fields.List(fields.Nested) 
 
     class Meta:
-        fields = ('email', 'username', 'f_name', 'password', 'is_admin', 'dogs', 'events_created')
+        fields = ('email', 'username', 'f_name', 'password', 'is_admin')

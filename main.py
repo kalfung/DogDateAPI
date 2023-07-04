@@ -25,7 +25,7 @@ def setup():
     app.register_blueprint(cli_bp)
     app.register_blueprint(parks_bp)
 
-    @app.get("/")
+    @app.route("/")
     def home():
         return "Lali ho, friend!"
     return app
