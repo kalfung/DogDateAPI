@@ -130,7 +130,7 @@ def delete_user(user_id):
     else:
         return {'error': 'User not found'}, 404
 
-# Creating an admin-only access method for admin-only routes
+# Admin-only access method for admin-only routes
 def admin_required():
     user_id = get_jwt_identity()
     stmt = db.select(User).filter_by(id=user_id)
@@ -138,7 +138,7 @@ def admin_required():
     if not (user and user.is_admin):
         abort(401, description='Invalid credentials')
 
-# Creating an owner-only access method for owner-only routes
+# Owner-only access method for owner-only routes
 def admin_or_owner_required(owner_id):
     user_id = get_jwt_identity()
     stmt = db.select(User).filter_by(id=user_id)

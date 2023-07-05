@@ -19,6 +19,7 @@ class Event_UserSchema(ma.Schema):
 #     event_id = fields.Integer(validation=Range(min=1))
 #     user_id = fields.Integer(validation=Range(min=1))
 
-#     event = fields.Nested('EventSchema')
+    event = fields.Nested('EventSchema')
+    attendees = fields.List(fields.Nested('UserSchema'))
     class Meta:
-        fields = ('id', 'date_created', 'event_id', 'user_id')
+        fields = ('id', 'date_created', 'event_id', 'user_id', 'event', 'attendees')
