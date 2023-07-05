@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from init import db
 from models.event import Event, EventSchema
+from models.event_user import Event_User
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from blueprints.auth_bp import admin_required
@@ -38,12 +39,24 @@ def create_event():
         description = event_info['description'],
         date = event_info['date'],
         time = event_info['time'],
-        user_id = get_jwt_identity(),
+        user_id = get_jwt_identity(), # creator of the event
         park_id = event_info['park_id']
     )
 
     # Add and commit the new event to the session
     db.session.add(event)
     db.session.commit()
+    
+    event_user = Event_User(
+        date_created = date.today(),
+        event_id = event.id,
+        user_id = get_jwt_identity() # creator of the event
+    )
+    
+    # Add and commit the user as event attendee to the session
+    db.session.add(event_user)
+    db.session.commit()
+        
     # Send the new event back to the client
     return EventSchema().dump(event), 201
+    
