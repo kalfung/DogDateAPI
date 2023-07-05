@@ -20,3 +20,4 @@ class ParkSchema(ma.Schema):
     events = fields.List(fields.Nested('EventSchema', only=['title', 'date']))
     class Meta:
         fields = ('id', 'name', 'latitude', 'longitude', 'events')
+        ordered = True

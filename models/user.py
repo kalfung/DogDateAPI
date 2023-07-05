@@ -35,3 +35,4 @@ class UserSchema(ma.Schema):
 
     class Meta:
         fields = ('id', 'email', 'username', 'f_name', 'l_name', 'password', 'is_admin', 'dogs', 'events_created')
+        ordered = True

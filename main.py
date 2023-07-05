@@ -19,8 +19,8 @@ def setup():
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URI')
     # JWT secret key
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_KEY')
-    # Allow for definable sort order of fields in Schemas
-    app.config['JSON_SORT_KEYS'] = True
+
+    app.json.sort_keys = False
 
     # Passing in app object to all instances of init modules
     db.init_app(app)
@@ -35,16 +35,19 @@ def setup():
     app.register_blueprint(parks_bp)
     app.register_blueprint(events_bp)
     
+    # Handle resources not found
     @app.errorhandler(404)
     def handle_404(err):
         return {'error': str(err)}, 404
 
+    # Handle authorisation errors
     @app.errorhandler(401)
     def handle_401(err):
         return {'error': str(err)}, 401
     
+    # Handle schema validation errors
     @app.errorhandler(ValidationError)
-    def validation_error(err):
-      return {'error': err.__dict__['messages']}, 400
+    def handle_Validation_Error(err):
+        return {'error': err.__dict__['messages']}, 400
     
     return app
