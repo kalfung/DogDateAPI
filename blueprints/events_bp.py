@@ -61,7 +61,7 @@ def create_event():
     # Send the new event back to the client
     return EventSchema().dump(event), 201
     
-# PUT or PATCH an event - UPDATE request
+# PUT PATCH an event - UPDATE request
 @events_bp.route('/<int:event_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_event(event_id):
@@ -78,4 +78,18 @@ def update_event(event_id):
         db.session.commit()
         return EventSchema(exclude=['event_creator']).dump(event)
     else:
-        return {'error': 'Event not found'}, 404 
+        return {'error': 'Event not found'}, 404
+    
+# DELETE an event - DELETE request
+@events_bp.route('/<int:event_id>', methods=['DELETE'])
+@jwt_required()
+def delete_event(event_id):
+    stmt = db.select(Event).filter_by(id=event_id)
+    event = db.session.scalar(stmt)
+    if event:
+        admin_or_owner_required(event.event_creator.id)
+        db.session.delete(event)
+        db.session.commit()
+        return {'confirmation': 'Event deleted'}, 200
+    else:
+        return {'error': 'Event not found'}, 404
