@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from init import db
 from models.dog import Dog, DogSchema
 from datetime import date
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from blueprints.auth_bp import admin_required
 
 dogs_bp = Blueprint('dogs', __name__, url_prefix='/dogs')
@@ -25,3 +25,25 @@ def get_one_dog(dog_id):
         return DogSchema().dump(dog)
     else:
         return {'error': 'Dog not found'}, 404
+    
+# POST new dog - CREATE request
+@dogs_bp.route('/', methods=['POST'])
+@jwt_required()
+def create_dog():
+    # Load the incoming POST data via the schema
+    dog_info = DogSchema().load(request.json)
+    # Create a new Dog instance from the dog_info
+    dog = Dog(
+        name = dog_info['name'],
+        gender = dog_info['gender'],
+        breed = dog_info['breed'],
+        age = dog_info['age'],
+        size = dog_info['size'],
+        user_id = get_jwt_identity()
+    )
+
+    # Add and commit the new park to the session
+    db.session.add(dog)
+    db.session.commit()
+    # Send the new park back to the client
+    return DogSchema().dump(dog), 201

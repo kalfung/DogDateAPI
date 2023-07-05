@@ -26,6 +26,7 @@ def get_one_park(park_id):
     
 # POST new park - CREATE request
 @parks_bp.route('/', methods=['POST'])
+@jwt_required()
 def create_park():
     # Load the incoming POST data via the schema
     park_info = ParkSchema().load(request.json)
