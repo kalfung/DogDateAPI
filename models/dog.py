@@ -26,3 +26,4 @@ class DogSchema(ma.Schema):
     owner = fields.Nested('UserSchema', only=['username', 'f_name'])
     class Meta:
         fields = ('name', 'gender', 'breed', 'age', 'size', 'owner')
+        ordered = True
