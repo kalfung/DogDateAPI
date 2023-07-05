@@ -27,11 +27,11 @@ class User(db.Model):
 
 class UserSchema(ma.Schema):
     # Telling Marshmallow to use DogSchema to serialise the 'dogs' field
-    dogs = fields.List(fields.Nested('DogSchema', exclude=['user_id', 'owner']))
+    dogs = fields.List(fields.Nested('DogSchema', only=['name']))
     # Telling Marshmallow to use EventSchema to serialise the 'events_created' field
-    events_created = fields.List(fields.Nested('EventSchema', exclude=['id', 'user_id']))
+    events_created = fields.List(fields.Nested('EventSchema', only=['title']))
 #     # NEED TO add schema for parksusers i.e. parks_frequented
 #     # parks = fields.List(fields.Nested) 
 
     class Meta:
-        fields = ('id', 'email', 'username', 'f_name', 'l_name', 'password', 'is_admin')
+        fields = ('id', 'email', 'username', 'f_name', 'l_name', 'password', 'is_admin', 'dogs', 'events_created')

@@ -17,6 +17,6 @@ class Park(db.Model):
 
 class ParkSchema(ma.Schema):
     # Telling marshmallow to use EventSchema to serialise 'events'
-    events = fields.List(fields.Nested('EventSchema', exclude=['id', 'park_id']))
+    events = fields.List(fields.Nested('EventSchema', only=['title', 'date']))
     class Meta:
-        fields = ('id', 'name', 'latitude', 'longitude')
+        fields = ('id', 'name', 'latitude', 'longitude', 'events')
