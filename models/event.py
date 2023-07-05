@@ -28,7 +28,7 @@ class Event(db.Model):
 class EventSchema(ma.Schema):
     # Tell Marshmallow to use UserSchema to serialise the 'event_creator' field
     event_creator = fields.Nested('UserSchema', only=['username', 'f_name', 'id'])
-    # Tell Marshmallow to user ParkSchema to serailise the 'park' field
+    # Tell Marshmallow to user ParkSchema to serialise the 'park' field
     park = fields.Nested('ParkSchema', only=['name'])
     class Meta:
         fields = ('id', 'title', 'description', 'date', 'time', 'park_id', 'park', 'event_creator')

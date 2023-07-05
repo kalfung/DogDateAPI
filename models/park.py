@@ -22,7 +22,7 @@ class ParkSchema(ma.Schema):
     events = fields.List(fields.Nested('EventSchema', only=['title', 'date']))
     # Validators
     name = fields.String(required=True, validate=And(
-        Length(min=4, error='Name of the park must be at least 4 characters long'),
+        Length(min=4, max=100, error='Name of the park must be at least 4 characters long, and no more than 100 characters'),
         Regexp('^[a-zA-Z \'-]+$', error='Only letters, spaces, hyphens and apostrophes are allowed')
     ))
     latitude = fields.Float(required=True)
