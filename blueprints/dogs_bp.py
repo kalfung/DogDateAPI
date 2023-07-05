@@ -65,3 +65,17 @@ def update_dog(dog_id):
         return DogSchema(exclude=['owner']).dump(dog)
     else:
         return {'error': 'Dog not found'}, 404
+    
+# DELETE a dog - DELETE request
+@dogs_bp.route('/<int:dog_id>', methods=['DELETE'])
+@jwt_required()
+def delete_dog(dog_id):
+    stmt = db.select(Dog).filter_by(id=dog_id)
+    dog = db.session.scalar(stmt)
+    if dog:
+        admin_or_owner_required(dog.owner.id) 
+        db.session.delete(dog)
+        db.session.commit()
+        return {'confirmation': f'{dog.name} has been deleted'}, 200
+    else:
+        return {'error': 'Dog not found'}, 404

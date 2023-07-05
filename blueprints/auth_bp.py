@@ -126,7 +126,7 @@ def delete_user(user_id):
         admin_required() # the actual user themself should also be able to self-delete
         db.session.delete(user)
         db.session.commit()
-        return {'confirmation': 'User has been deleted'}, 200
+        return {'confirmation': f'User {user.username} has been deleted'}, 200
     else:
         return {'error': 'User not found'}, 404
 
@@ -144,4 +144,4 @@ def admin_or_owner_required(owner_id):
     stmt = db.select(User).filter_by(id=user_id)
     user = db.session.scalar(stmt)
     if not (user and (user.is_admin or user_id == owner_id)):
-        abort(401, description='You must be an admin or the owner')
+        abort(401, description='You must be an admin or the owner to perform this action')

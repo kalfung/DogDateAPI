@@ -90,6 +90,6 @@ def delete_event(event_id):
         admin_or_owner_required(event.event_creator.id)
         db.session.delete(event)
         db.session.commit()
-        return {'confirmation': 'Event deleted'}, 200
+        return {'confirmation': f'{event.title} has been deleted'}, 200
     else:
         return {'error': 'Event not found'}, 404

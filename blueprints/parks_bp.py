@@ -74,6 +74,6 @@ def delete_park(park_id):
         admin_required()
         db.session.delete(park)
         db.session.commit()
-        return {'confirmation': 'Park deleted'}, 200
+        return {'confirmation': f'{park.name} has been deleted'}, 200
     else:
         return {'error': 'Park not found'}, 404
