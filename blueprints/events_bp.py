@@ -4,7 +4,7 @@ from models.event import Event, EventSchema
 from models.event_user import Event_User
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from blueprints.auth_bp import admin_required
+from blueprints.auth_bp import admin_required, admin_or_owner_required
 
 events_bp = Blueprint('events', __name__, url_prefix='/events')
 
@@ -47,6 +47,7 @@ def create_event():
     db.session.add(event)
     db.session.commit()
     
+    # Adding creator of event to the events_users association table
     event_user = Event_User(
         date_created = date.today(),
         event_id = event.id,
@@ -60,3 +61,21 @@ def create_event():
     # Send the new event back to the client
     return EventSchema().dump(event), 201
     
+# PUT OR PATCH an event - UPDATE request
+@events_bp.route('/<int:event_id>', methods=['PUT', 'PATCH'])
+@jwt_required()
+def update_event(event_id):
+    event_info = EventSchema().load(request.json)
+    stmt = db.select(Event).filter_by(id=event_id)
+    event = db.session.scalar(stmt)
+    if event:
+        admin_or_owner_required(event.event_creator.id)      
+        event.title = event_info.get('title', event.title)
+        event.description = event_info.get('description', event.description)
+        event.date = event_info.get('date', event.date)
+        event.time = event_info.get('time', event.time)
+        event.park_id = event_info.get('park_id', event.park_id)
+        db.session.commit()
+        return EventSchema(exclude=['event_creator']).dump(event)
+    else:
+        return {'error': 'Event not found'}, 404 
