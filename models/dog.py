@@ -25,4 +25,4 @@ class DogSchema(ma.Schema):
     # Tell Marshmallow to use UserSchema to serialise the 'owner' field
     owner = fields.Nested('UserSchema', only=['username', 'f_name'])
     class Meta:
-        fields = ('id', 'name', 'gender', 'breed', 'age', 'size', 'user_id', 'owner')
+        fields = ('name', 'gender', 'breed', 'age', 'size', 'owner')

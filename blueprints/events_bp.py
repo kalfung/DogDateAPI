@@ -61,7 +61,7 @@ def create_event():
     # Send the new event back to the client
     return EventSchema().dump(event), 201
     
-# PUT OR PATCH an event - UPDATE request
+# PUT or PATCH an event - UPDATE request
 @events_bp.route('/<int:event_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_event(event_id):

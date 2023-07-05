@@ -3,7 +3,7 @@ from init import db
 from models.dog import Dog, DogSchema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from blueprints.auth_bp import admin_required
+from blueprints.auth_bp import admin_required, admin_or_owner_required
 
 dogs_bp = Blueprint('dogs', __name__, url_prefix='/dogs')
 
@@ -47,3 +47,21 @@ def create_dog():
     db.session.commit()
     # Send the new dog back to the client
     return DogSchema().dump(dog), 201
+
+# PUT or PATCH a dog - UPDATE request
+@dogs_bp.route('/<int:dog_id>', methods=['PUT', 'PATCH'])
+@jwt_required()
+def update_dog(dog_id):
+    dog_info = DogSchema().load(request.json)
+    stmt = db.select(Dog).filter_by(id=dog_id)
+    dog = db.session.scalar(stmt)
+    if dog:
+        admin_or_owner_required(dog.owner.id)     
+        dog.name = dog_info.get('name', dog.name)
+        dog.breed = dog_info.get('breed', dog.breed)
+        dog.age = dog_info.get('age', dog.age)
+        dog.size = dog_info.get('size', dog.size)
+        db.session.commit()
+        return DogSchema(exclude=['owner']).dump(dog)
+    else:
+        return {'error': 'Dog not found'}, 404
