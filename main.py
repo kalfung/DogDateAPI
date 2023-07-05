@@ -4,7 +4,9 @@ from flask import Flask
 from init import db, ma, jwt, bcrypt
 from blueprints.cli_bp import cli_bp
 from blueprints.auth_bp import auth_bp
+from blueprints.dogs_bp import dogs_bp
 from blueprints.parks_bp import parks_bp
+from blueprints.events_bp import events_bp
 
 
 def setup():
@@ -26,8 +28,10 @@ def setup():
     # Registering blueprints with the app object
     app.register_blueprint(cli_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(dogs_bp)
     app.register_blueprint(parks_bp)
-
+    app.register_blueprint(events_bp)
+    
     @app.route("/")
     def home():
         return "Lali ho, friend!"
