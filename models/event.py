@@ -31,4 +31,4 @@ class EventSchema(ma.Schema):
     # Tell Marshmallow to user ParkSchema to serailise the 'park' field
     park = fields.List(fields.Nested('ParkSchema', only=['name', 'latitude', 'longitude']))
     class Meta:
-        fields = ('id', 'title', 'description', 'date', 'time')
+        fields = ('id', 'title', 'description', 'date', 'time', 'user_id', 'park_id')

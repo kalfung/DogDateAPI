@@ -42,8 +42,8 @@ def create_dog():
         user_id = get_jwt_identity()
     )
 
-    # Add and commit the new park to the session
+    # Add and commit the new dog to the session
     db.session.add(dog)
     db.session.commit()
-    # Send the new park back to the client
+    # Send the new dog back to the client
     return DogSchema().dump(dog), 201
