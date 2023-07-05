@@ -13,7 +13,7 @@ auth_bp = Blueprint('auth', __name__)
 def all_users():
     admin_required()
     stmt = db.select(User).order_by(User.id)
-    users = db.session.scalars(stmt).all()
+    users = db.session.scalars(stmt)
     return UserSchema(many=True, exclude=['password']).dump(users)
 
 # GET one user - READ request
@@ -63,7 +63,7 @@ def login():
         # if user and bcrypt.check_password_hash(user.password, request.json['password']):
         if user and bcrypt.check_password_hash(user.password, user_info['password']):
             token = create_access_token(identity=user.id, expires_delta=timedelta(days=30))
-            return {'token': token, 'user': UserSchema(exclude=['password', 'is_admin']).dump(user), 'message': f'Welcome {user.username}'}
+            return {'token': token, 'user': UserSchema(exclude=['password', 'is_admin']).dump(user), 'message': f'Welcome, {user.username}'}
         else:
             return {'error': 'Invalid email address or password'}, 401
     except KeyError:
@@ -85,6 +85,34 @@ def update_user(user_id):
         user.password = user_info.get(bcrypt.generate_password_hash('password').decode('utf8'), user.password)
         db.session.commit()
         return UserSchema(exclude=['is_admin']).dump(user)
+    else:
+        return {'error': 'User not found'}, 404
+
+# PATCH a user to grant admin access - UPDATE request
+@auth_bp.route('/users/<int:user_id>/grant-admin-access', methods=['PATCH'])
+@jwt_required()
+def grant_admin_access(user_id):
+    admin_required()
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if user:
+        user.is_admin = True
+        db.session.commit()
+        return UserSchema().dump(user) # could potentially add confirmation message here
+    else:
+        return {'error': 'User not found'}, 404
+
+# PATCH a user to remove admin access - UPDATE request
+@auth_bp.route('/users/<int:user_id>/remove-admin-access', methods=['PATCH'])
+@jwt_required()
+def remove_admin_access(user_id):
+    admin_required()
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if user:
+        user.is_admin = False
+        db.session.commit()
+        return UserSchema().dump(user) # could potentially add confirmation message here
     else:
         return {'error': 'User not found'}, 404
 
