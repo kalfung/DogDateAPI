@@ -25,7 +25,7 @@ def get_one_event(event_id):
     if event:
         return EventSchema().dump(event)
     else:
-        return {'error': 'Event not found'}, 404
+        return {'error': 'We could not find the event you were looking for'}, 404
     
 # POST new event - CREATE request
 @events_bp.route('/', methods=['POST'])
@@ -78,7 +78,7 @@ def update_event(event_id):
         db.session.commit()
         return EventSchema(exclude=['event_creator']).dump(event)
     else:
-        return {'error': 'Event not found'}, 404
+        return {'error': 'We could not find the event you were looking for'}, 404
     
 # DELETE an event - DELETE request
 @events_bp.route('/<int:event_id>', methods=['DELETE'])
@@ -92,4 +92,4 @@ def delete_event(event_id):
         db.session.commit()
         return {'confirmation': f'{event.title} has been deleted'}, 200
     else:
-        return {'error': 'Event not found'}, 404
+        return {'error': 'We could not find the event you were looking for'}, 404

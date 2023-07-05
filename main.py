@@ -19,7 +19,7 @@ def setup():
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URI')
     # JWT secret key
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_KEY')
-
+    # Allow ordering of Schema fields
     app.json.sort_keys = False
 
     # Passing in app object to all instances of init modules

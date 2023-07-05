@@ -24,7 +24,7 @@ def get_one_dog(dog_id):
     if dog:
         return DogSchema().dump(dog)
     else:
-        return {'error': 'Dog not found'}, 404
+        return {'error': 'We could not find the dog you were looking for'}, 404
     
 # POST new dog - CREATE request
 @dogs_bp.route('/', methods=['POST'])
@@ -64,7 +64,7 @@ def update_dog(dog_id):
         db.session.commit()
         return DogSchema(exclude=['owner']).dump(dog)
     else:
-        return {'error': 'Dog not found'}, 404
+        return {'error': 'We could not find the dog you were looking for'}, 404
     
 # DELETE a dog - DELETE request
 @dogs_bp.route('/<int:dog_id>', methods=['DELETE'])
@@ -78,4 +78,4 @@ def delete_dog(dog_id):
         db.session.commit()
         return {'confirmation': f'{dog.name} has been deleted'}, 200
     else:
-        return {'error': 'Dog not found'}, 404
+        return {'error': 'We could not find the dog you were looking for'}, 404

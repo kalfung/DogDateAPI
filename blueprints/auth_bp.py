@@ -25,7 +25,7 @@ def one_user(user_id):
     if user:
         return UserSchema(exclude=['password']).dump(user)
     else:
-        return {'error': 'User not found'}, 404
+        return {'error': 'We could not find the user you were looking for'}, 404
 
 # POST a new user - CREATE request
 @auth_bp.route('/register', methods=['POST'])
@@ -86,7 +86,7 @@ def update_user(user_id):
         db.session.commit()
         return UserSchema(exclude=['is_admin']).dump(user)
     else:
-        return {'error': 'User not found'}, 404
+        return {'error': 'We could not find the user you were looking for'}, 404
 
 # PATCH a user to grant admin access - UPDATE request
 @auth_bp.route('/users/<int:user_id>/grant-admin-access', methods=['PATCH'])
@@ -100,7 +100,7 @@ def grant_admin_access(user_id):
         db.session.commit()
         return UserSchema().dump(user) # could potentially add confirmation message here
     else:
-        return {'error': 'User not found'}, 404
+        return {'error': 'We could not find the user you were looking for'}, 404
 
 # PATCH a user to remove admin access - UPDATE request
 @auth_bp.route('/users/<int:user_id>/remove-admin-access', methods=['PATCH'])
@@ -114,7 +114,7 @@ def remove_admin_access(user_id):
         db.session.commit()
         return UserSchema().dump(user) # could potentially add confirmation message here
     else:
-        return {'error': 'User not found'}, 404
+        return {'error': 'We could not find the user you were looking for'}, 404
 
 # DELETE a user - DELETE request
 @auth_bp.route('/users/<int:user_id>', methods=['DELETE'])
@@ -128,7 +128,7 @@ def delete_user(user_id):
         db.session.commit()
         return {'confirmation': f'User {user.username} has been deleted'}, 200
     else:
-        return {'error': 'User not found'}, 404
+        return {'error': 'We could not find the user you were looking for'}, 404
 
 # Admin-only access method for admin-only routes, abort if not admin
 def admin_required():

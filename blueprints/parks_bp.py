@@ -22,7 +22,7 @@ def get_one_park(park_id):
     if park:
         return ParkSchema().dump(park)
     else:
-        return {'error': 'Park not found'}, 404
+        return {'error': 'We could not find the park you were looking for'}, 404
     
 # POST new park - CREATE request
 @parks_bp.route('/', methods=['POST'])
@@ -62,7 +62,7 @@ def update_park(park_id):
         db.session.commit()
         return ParkSchema().dump(park)
     else: 
-        return {'error': 'Park not found'}, 404
+        return {'error': 'We could not find the park you were looking for'}, 404
 
 # DELETE a park - DELETE request
 @parks_bp.route('/<int:park_id>', methods=['DELETE'])
@@ -76,4 +76,4 @@ def delete_park(park_id):
         db.session.commit()
         return {'confirmation': f'{park.name} has been deleted'}, 200
     else:
-        return {'error': 'Park not found'}, 404
+        return {'error': 'We could not find the park you were looking for'}, 404
