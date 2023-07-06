@@ -33,7 +33,7 @@ def get_one_event(event_id):
 def create_event():
     # Load the incoming POST data via the schema
     event_info = EventSchema().load(request.json)
-    # Create a new Dog instance from the dog_info
+    # Create a new Event instance from the event_info
     event = Event(
         title = event_info['title'],
         description = event_info['description'],
@@ -61,7 +61,7 @@ def create_event():
     # Send the new event back to the client
     return EventSchema().dump(event), 201
     
-# PUT PATCH an event - UPDATE request
+# PUT or PATCH an event - UPDATE request
 @events_bp.route('/<int:event_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_event(event_id):
