@@ -27,18 +27,18 @@ class DogSchema(ma.Schema):
     # Tell Marshmallow to use UserSchema to serialise the 'owner' field
     owner = fields.Nested('UserSchema', only=['username', 'f_name'])
     # Validators
-    name = fields.String(required=True, validate=And(
+    name = fields.String(validate=And(
         Length(min=1, max=30, error='Name of the dog must be at least 1 character long, and no more than 30 characters'),
         Regexp('^[a-zA-Z \'-]+$', error='Only letters, spaces, hyphens and apostrophes are allowed')
     ))
-    gender = fields.String(required=True, validate=[OneOf(['Male', 'Female'])])
-    breed = fields.String(required=True, validate=And(
+    gender = fields.String(validate=[OneOf(['Male', 'Female'])])
+    breed = fields.String(validate=And(
         Length(min=3, max=60, error='Breed of the dog must be at least 3 characters long, and no more than 60 characters'),
         Regexp('^[a-zA-Z \'-]+$', error='Only letters, spaces, hyphens and apostrophes are allowed')
     ))
-    age = fields.Integer(required=True, error='Age of the dog must be an integer value')
+    age = fields.Integer(error='Age of the dog must be an integer value')
     size = fields.String(default='Small', validate=[OneOf(['Small', 'Medium', 'Large'])])
 
     class Meta:
-        fields = ('name', 'gender', 'breed', 'age', 'size', 'owner')
+        fields = ('id', 'name', 'gender', 'breed', 'age', 'size', 'owner')
         ordered = True
