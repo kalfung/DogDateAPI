@@ -21,12 +21,12 @@ class ParkSchema(ma.Schema):
     # Telling marshmallow to use EventSchema to serialise 'events'
     events = fields.List(fields.Nested('EventSchema', only=['title', 'date']))
     # Validators
-    name = fields.String(required=True, validate=And(
+    name = fields.String(validate=And(
         Length(min=4, max=100, error='Name of the park must be at least 4 characters long, and no more than 100 characters'),
         Regexp('^[a-zA-Z \'-]+$', error='Only letters, spaces, hyphens and apostrophes are allowed')
     ))
-    latitude = fields.Float(required=True)
-    longitude = fields.Float(required=True)
+    latitude = fields.Float()
+    longitude = fields.Float()
     date_registered = fields.Date(load_default=date.today())
     last_updated = fields.Date(load_default=date.today())
 

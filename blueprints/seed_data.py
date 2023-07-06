@@ -63,7 +63,7 @@ users = [
         username = 'wonderwoman',
         f_name = 'Diana',
         l_name = 'Prince',
-        password = bcrypt.generate_password_hash('amazon').decode('utf8'),
+        password = bcrypt.generate_password_hash('amazonwarrior').decode('utf8'),
         date_created = date.today()
     ),
     User(
@@ -73,7 +73,14 @@ users = [
         l_name = 'West',
         password = bcrypt.generate_password_hash('redandyellow').decode('utf8'),
         date_created = date.today()
-    )    
+    ),
+    User(
+        email = 'jimmy.olsen@dailyplanet.com',
+        username = 'sidekick',
+        f_name = 'Jimmy',
+        l_name = 'Olsen',
+        password = bcrypt.generate_password_hash('boyscout').decode('utf8'),
+    )
 ]
 
 # seed data for dogs

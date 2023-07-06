@@ -23,7 +23,7 @@ def one_user(user_id):
     stmt = db.select(User).filter_by(id=user_id)
     user = db.session.scalar(stmt)
     if user:
-        return UserSchema(exclude=['password']).dump(user)
+        return UserSchema(exclude=['password', 'is_admin']).dump(user)
     else:
         return {'error': 'We could not find the user you were looking for'}, 404
 
@@ -47,7 +47,7 @@ def register_user():
         db.session.commit()
         
         # Return the new user, excluding the password and is_admin
-        return UserSchema(exclude=['password', 'is_admin']).dump(new_user), 201
+        return UserSchema(only=['id', 'email', 'username', 'f_name', 'l_name']).dump(new_user), 201
     except IntegrityError:
         return {'error': 'The email address is already in use'}, 409
     
@@ -82,9 +82,13 @@ def update_user(user_id):
         user.username = user_info.get('username', user.username)
         user.f_name = user_info.get('f_name', user.f_name)
         user.l_name = user_info.get('l_name', user.l_name)
-        user.password = user_info.get(bcrypt.generate_password_hash('password').decode('utf8'), user.password)
+        new_password = user_info.get('password')
+        if new_password:
+            user.password = bcrypt.generate_password_hash(new_password).decode('utf8')
+        else:
+            user.password = user.password
         db.session.commit()
-        return UserSchema(exclude=['is_admin']).dump(user)
+        return UserSchema(exclude=['is_admin', 'dogs', 'events_created']).dump(user)
     else:
         return {'error': 'We could not find the user you were looking for'}, 404
 
