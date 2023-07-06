@@ -1,7 +1,14 @@
 from init import db, ma
 from marshmallow import fields
 from marshmallow.validate import Length, And, Regexp
-from datetime import date
+from datetime import date, datetime
+from time import time_ns
+
+class EpochDateTime(fields.Field):
+    def _serialize(self, value, attr, obj, **kwargs):
+        if value is None:
+            return None
+        return datetime.datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")
 
 class User(db.Model):
     __tablename__= 'users'
@@ -15,7 +22,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     # Creating user role. A new user by default will not be an admin
     is_admin = db.Column(db.Boolean, default=False)
-    date_created = db.Column(db.Date, nullable=False)
+    date_created = db.Column(db.BigInteger, nullable=False)
 
     # Relationship between owners and their dogs
     dogs = db.relationship('Dog', back_populates='owner', cascade='all, delete')
@@ -25,7 +32,7 @@ class User(db.Model):
     # Relationship between users and the events they are attending NOT WORKING
     # events_attending = db.relationship('Event', secondary='event_user', backref='attendees')
     
-    # Relationship between users and the parks they frequent 
+    # Relationship between users and the parks they frequent
 
 class UserSchema(ma.Schema):
     # Telling Marshmallow to use DogSchema to serialise the 'dogs' field
@@ -51,7 +58,7 @@ class UserSchema(ma.Schema):
     ))
     password = fields.String(validate=Length(min=8, error='Password must be at least 8 characters long'))
     is_admin = fields.Boolean(default=False)
-    date_created = fields.Date(load_default=date.today())
+    date_created = fields.Integer(load_default=time_ns())
     class Meta:
-        fields = ('id', 'email', 'username', 'f_name', 'l_name', 'password', 'is_admin', 'dogs', 'events_created')
+        fields = ('id', 'email', 'username', 'f_name', 'l_name', 'password', 'is_admin', 'date_created', 'dogs', 'events_created')
         ordered = True

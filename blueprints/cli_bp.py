@@ -27,6 +27,15 @@ def delete_tables():
     db.drop_all()
     print('Deleted DogDateAPI tables')
 
+# CLI command to seed users table only in DB TEMPORARY
+@cli_bp.cli.command('seed_users')
+def seed_users():
+    # Users
+    db.session.query(User).delete()
+    db.session.add_all(users)
+    db.session.commit()
+    print('Users seeded successfully')
+
 # CLI command to seed tables
 @cli_bp.cli.command('seed_tables')
 def seed_tables():

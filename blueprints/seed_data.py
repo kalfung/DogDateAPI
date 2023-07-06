@@ -1,5 +1,6 @@
 from init import bcrypt
 from datetime import date
+from time import time_ns
 
 from models.user import User
 from models.dog import Dog
@@ -16,7 +17,7 @@ users = [
         l_name = 'Ministrator',
         password = bcrypt.generate_password_hash('golden123').decode('utf8'),
         is_admin = True,
-        date_created = date.today()
+        date_created = time_ns()
     ),
     User(
         email = 'clark.kent@dailyplanet.com',
@@ -24,7 +25,7 @@ users = [
         f_name = 'Clark',
         l_name = 'Kent',
         password = bcrypt.generate_password_hash('fortressofsolitude').decode('utf8'),
-        date_created = date.today()
+        date_created = time_ns()
     ),
     User(
         email = 'lois.lane@dailyplanet.com',
@@ -32,7 +33,7 @@ users = [
         f_name = 'Lois',
         l_name = 'Lane',
         password = bcrypt.generate_password_hash('Metropolis').decode('utf8'),
-        date_created = date.today()
+        date_created = time_ns()
     ),
     User(
         email = 'brucewayne@wayneenterprises.com',
@@ -40,7 +41,7 @@ users = [
         f_name = 'Bruce',
         l_name = 'Wayne',
         password = bcrypt.generate_password_hash('crimealley').decode('utf8'),
-        date_created = date.today()
+        date_created = time_ns()
     ),
     User(
         email = 'kalhounfarrer@gmail.com',
@@ -48,7 +49,7 @@ users = [
         f_name = 'Kalhoun',
         l_name = 'Farrer',
         password = bcrypt.generate_password_hash('warrioroflight').decode('utf8'),
-        date_created = date.today()
+        date_created = time_ns()
     ),
     User(
         email = 'johnjones@dc.comics',
@@ -56,7 +57,7 @@ users = [
         f_name = 'John',
         l_name = 'Jones',
         password = bcrypt.generate_password_hash('stayawayfromfire').decode('utf8'),
-        date_created = date.today()
+        date_created = time_ns()
     ),
     User(
         email = 'dianaprince@island.com',
@@ -64,7 +65,7 @@ users = [
         f_name = 'Diana',
         l_name = 'Prince',
         password = bcrypt.generate_password_hash('amazonwarrior').decode('utf8'),
-        date_created = date.today()
+        date_created = time_ns()
     ),
     User(
         email = 'wallywest@speedster.com',
@@ -72,7 +73,7 @@ users = [
         f_name = 'Wally',
         l_name = 'West',
         password = bcrypt.generate_password_hash('redandyellow').decode('utf8'),
-        date_created = date.today()
+        date_created = time_ns()
     ),
     User(
         email = 'jimmy.olsen@dailyplanet.com',
@@ -80,6 +81,7 @@ users = [
         f_name = 'Jimmy',
         l_name = 'Olsen',
         password = bcrypt.generate_password_hash('boyscout').decode('utf8'),
+        date_created = time_ns()
     )
 ]
 

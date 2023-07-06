@@ -2,8 +2,8 @@ from init import db, ma
 from marshmallow import fields
 from marshmallow.validate import Length, And, Regexp, OneOf
 
-VALID_GENDERS = ['Male', 'Female']
-VALID_SIZES = ['Small', 'Medium', 'Large']
+# VALID_GENDERS = ['Male', 'Female']
+# VALID_SIZES = ['Small', 'Medium', 'Large']
 
 class Dog(db.Model):
     __tablename__= 'dogs'
@@ -36,8 +36,9 @@ class DogSchema(ma.Schema):
         Length(min=3, max=60, error='Breed of the dog must be at least 3 characters long, and no more than 60 characters'),
         Regexp('^[a-zA-Z \'-]+$', error='Only letters, spaces, hyphens and apostrophes are allowed')
     ))
-    age = fields.Integer(error='Age of the dog must be an integer value')
+    age = fields.Integer(error_messages={'invalid': 'Age of the dog must be in years as an integer value'})
     size = fields.String(default='Small', validate=[OneOf(['Small', 'Medium', 'Large'])])
+    user_id = fields.Integer()
 
     class Meta:
         fields = ('id', 'name', 'gender', 'breed', 'age', 'size', 'owner')
