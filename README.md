@@ -8,15 +8,64 @@ https://github.com/kalfung/DogDateAPI
 
 https://trello.com/b/e3F45Prp/t2a2-api-webserver-project
 
-# R0 Installation instructions
+# R0 Installation and Setup
 
 Clone this API repository from GitHub into your chosen folder.
 
-Connect to a 
+Run the PostgreSQL prompt in a new terminal window:
 
-```
+```bash
 psql
 ```
+
+Create a database entitled 'dog_date_db':
+
+```psql
+CREATE DATABASE dog_date_db;
+```
+
+Connect to the database:
+
+```psql
+\c dog_date_db;
+```
+
+Create a new admin user for this database and give it a password, for example:
+
+```psql
+CREATE USER dogdatedev WITH PASSWORD 'password123';
+```
+
+Grant all privileges to this user:
+
+```psql
+GRANT ALL PRIVILEGES ON DATABASE dog_date_db TO dogdatedev;
+```
+
+In the main project directory, create an '.env' file using '.env.sample' as a template. Using the credentials we created above, the Database URI should be formatted as: 
+
+`postgresql+psycopg2://<user>:<password>@localhost:5432/<database>`
+
+E.g. `postgresql+psycopg2://dogdatedev:password123@localhost:5432/dog_date_db`
+
+Navigate to the `src/` directory and run the bash script from the terminal to create a .venv folder, run the virtual environment, install requirements, create the database tables, and seed the tables with sample data:
+
+```bash
+cd src
+```
+
+```bash
+$ create_and_seed.sh
+```
+
+The database and project environments are now set up. To run the app from the terminal, make sure you are in the `src/` directory to activate the virtual environment and then run the program:
+
+```bash
+$ source .venv/bin/activate
+$ flask run
+```
+
+The server runs on port 5000, but this can be reassigned in the .flaskenv file.
 
 # R1 and R2 Identification of the *problems* you are trying to solve by building this particular *app*.
 

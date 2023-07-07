@@ -8,7 +8,6 @@ from models.user import User
 from models.dog import Dog
 from models.park import Park
 from models.event import Event
-from models.park_user import Park_User
 from models.event_user import Event_User
 from blueprints.seed_data import users, parks, dogs, events, events_users
 

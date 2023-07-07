@@ -32,8 +32,6 @@ class User(db.Model):
     
     # Relationship between users and the events they are attending NOT WORKING
     # events_attending = db.relationship('Event', secondary='event_user', backref='attendees')
-    
-    # Relationship between users and the parks they frequent
 
 class UserSchema(ma.Schema):
     # Telling Marshmallow to use DogSchema to serialise the 'dogs' field
