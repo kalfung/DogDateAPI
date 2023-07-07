@@ -598,3 +598,24 @@ foreign keys etc
 
 # R10 Describe the way tasks are allocated and tracked in your project
 
+The tasks in this project were allocated and tracked using the following Trello Kanban board: 
+
+https://trello.com/b/e3F45Prp/t2a2-api-webserver-project
+
+**Board Setup:**
+
+The Kanban board was set up with columns representing different stages of the development process, such as "Design", "To Do," "Doing," "Testing," and "Done."
+
+**Task Cards:**
+
+Individual task cards were created on the board, representing specific development tasks required for building the Dog Date API. Tasks included "User Authentication," "Dog Model Creation," "Event Creation Endpoint," etc. Each task card was well-defined and granular, representing and allocated a single unit of work.
+
+**Task Tracking:**
+
+As I was progressing through tasks, the respective task cards were moved across the board columns to reflect their progress. For example, the "Dog Model Creation" task card was initially in the "To Do" column and was moved to "In Progress" once I began working on it.
+
+**Monitoring and Iteration:**
+
+The board was reviewed daily to track the progress of tasks and identify any bottlenecks or blockers.
+
+By utilising the Kanban board, I could visually track the progress of tasks and allocate work effectively throughout the development process of the dog play date API. This helped streamline the workflow, increase efficiency, and ensured that tasks were allocated and completed in a structured manner.
