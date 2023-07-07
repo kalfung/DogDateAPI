@@ -69,7 +69,7 @@ The server runs on port 5000, but this can be reassigned in the .flaskenv file.
 
 # R1 and R2 Identification of the *problems* you are trying to solve by building this particular *app*.
 
-Some people, like myself, find it easier to meet new people through their dogs. The creation of a web server API for creating dog play dates and meet-ups could solve several problems related to organising and facilitating interactions between dog owners and their pets. Some potential problems that this API could address include:
+Some people, like myself, find it easier to meet new people through their dogs. The app allows users to create play dates, meet-ups, or other events at dog parks. The creation of a web server API for creating dog play dates and meet-ups could solve several problems related to organising and facilitating interactions between dog owners and their pets. Some potential problems that this API could address include:
 
 1. Finding compatible playmates: Some dog owners often struggle to find suitable playmates for their pets. They may rely on chance encounters at dog parks or rely on word-of-mouth recommendations. An API could provide a centralised platform where owners can connect and schedule dog playdates, improving coordination and ensuring a better social experience for their pets.
 
@@ -227,23 +227,32 @@ Python-dotenv is a Python library that simplifies the management of environment 
 
 # R8 Describe your project's *models* in terms of the relationships they have with each other
 
+**User**
 
+Represents a user of the API, typically a dog owner. It has a one-to-many relationship with the Dog model since a user can have multiple dogs, but each dog can only have one user. Additionally, a user has a one-to-many relationship with the Event model because a single user can create multiple events, but each event can only have one creator.
 
-Models include:
-- users
-- dogs
-- dog parks
-- events
+**Dog**
 
-Relationships:
-- Users can have more than one dog, so the User/s model has a a one-to-many relationship with the Dogs model
-- Users have a one to many relationship with dog parks
-- Users have a one to many relationship with events
-- Dogs have a one to many relationship with dog parks
-- Dogs have a one to many relationship with events
-- Dog parks have a one to one relationship with events
+Represents a dog participating in the play dates and meet-ups. It has a many-to-one relationship with the User model since multiple dogs can belong to a single user, but each dog can only have one user. 
+
+**Park**
+
+Represents a dog park or other venue where the dog play dates or meet-ups occur. It has a one-to-many relationship with the Event model because multiple events can take place in a single park, but a single play date or meet-up can only occur in one park.
+
+**Event**
+
+Represents a specific play date or meet-up event. It has a many-to-one relationship with both the User and Park models. Each event is associated with a single user that created or organised the event, and takes places in a specific park. 
+
+**Event User**
+
+While the event creator user would have a one-to-many relationship with the Event model, the attendee users would have a many-to-many relationship with the Event model. A user can attend multiple events, and an event can have multiple attendees. By introducing the 'events_users' join table, we allow for the many-to-many relationship betwen attendee users and events.
 
 # R9 Discuss the database relations to be implemented in your application
+
+![ERD relationships](./docs/DogDateAPI_ERD_relationships.png)
+
+
+foreign keys etc
 
 # R10 Describe the way tasks are allocated and tracked in your project
 
