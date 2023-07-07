@@ -126,7 +126,7 @@ def add_event_attendee(event_id):
         event = db.session.scalar(db.select(Event).filter_by(id=event_id))
         attendees = db.session.scalars(db.select(Event_User).filter_by(event_id=event_id)).all()
         if event and attendees:
-            return {'event': EventSchema(exclude=['park_id', 'attendees']).dump(event), 'attendees': Event_UserSchema(many=True, only=['user_id']).dump(attendees), 'confirmation': f'User with user_ID {new_attendee.user_id} has been added to your event'}
+            return {'event': EventSchema(exclude=['park_id', 'attendees']).dump(event), 'attendees': Event_UserSchema(many=True, only=['user_id']).dump(attendees), 'confirmation': f'User with user_ID {new_attendee.user_id} has been added to your event'}, 201
         else:
             return {'error': 'We could not find the event you were looking for'}, 404
     except IntegrityError:

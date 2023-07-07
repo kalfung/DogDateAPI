@@ -389,6 +389,113 @@ Admins can delete a park in the database
 
 ![delete park](./docs/postman/parks_DELETE.PNG)
 
+## Events
+
+GET `/events`
+
+Retrieves a list of all events in the database.
+
+*Admin credentials required*
+
+- Methods: GET
+- Parameters: None
+- Headers: Admin Authorisation {Bearer token}
+- Response: 200
+- Response: 401
+
+![get events](./docs/postman/events_GET_all.PNG)
+
+GET `/events/{event_id}`
+
+Retrieves a single event from the database
+
+- Methods: GET
+- Parameters: event_id Integer
+- Headers: Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![get one event](./docs/postman/events_GET_one.PNG)
+
+POST `/events/`
+
+Users can create a new event to add to the database
+
+- Methods: POST
+- Parameters: None
+- Headers: Authorisation {Bearer token}
+- Response: 201
+- Response: 400, 401
+
+![post event](./docs/postman/events_POST.PNG)
+
+PUT or PATCH `/events/{event_id}`
+
+Admins or event creator can update a single event in the database
+
+*Admin or owner credentials required*
+
+- Methods: PUT, PATCH
+- Parameters: event_id Integer
+- Headers: Admin or owner Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![patch event](./docs/postman/events_PATCH.PNG)
+
+DELETE `/events/{event_id}`
+
+Admins or event creator can delete a single event in the database
+
+*Admin or owner credentials required*
+
+- Methods: DELETE
+- Parameters: event_id Integer
+- Headers: Admin or owner Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![delete event](./docs/postman/events_DELETE.PNG)
+
+GET `/events/{event_id}/attendees`
+
+Retrieves the list of attendees for a specific event
+
+- Methods: GET
+- Parameters: event_id Integer
+- Headers: Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![get attendees](./docs/postman/attendees_GET.PNG)
+
+POST `/events/{event_id}/attendees`
+
+Admins can add a new attendee to a specified event
+
+*Admin credentials required*
+
+- Methods: POST
+- Parameters: event_id Integer
+- Headers: Admin Authorisation {Bearer token}
+- Response: 201
+- Response: 404, 409
+
+![post attendee to event](./docs/postman/attendees_POST.PNG)
+
+DELETE `/events/{event_id}/attendees`
+
+Admins can remove attendees from a specified event
+
+*Admin credentials required*
+
+- Methods: DELETE
+- Parameters: event_id Integer
+- Headers: Admin Authorisation {Bearer token}
+- Response: 200
+- Response: 404, 409
+
+![delete attendee from event](/docs/postman/attendees_DELETE.PNG)
 
 # R6 An ERD for your *app*
 
