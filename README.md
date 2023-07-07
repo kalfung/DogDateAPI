@@ -101,8 +101,19 @@ I have chosen the PostgreSQL relational database system for this API project due
 
 6. Scalability: PostgreSQL is designed to handle large datasets and concurrent access effectively. It offers mechanisms for horizontal scalability through features like table partitioning and replication, allowing the dog playdates API to scale as the user base and data volume increase.
 
-7. Community support and ecosystem: PostgreSQL benefits from a vibrant and active open-source community that continuously improves and enhances the database system. The community provides regular updates, security patches, and additional features. Moreover, PostgreSQL has a rich ecosystem of extensions and plugins that can be utilised to extend the functionality of the API and integrate with other technologies.
+7. Geospatial capabilities: Becauseg the dog playdates API involves geolocation or spatial data, PostgreSQL's built-in support for geospatial data types and indexing can be advantageous. It enables efficient storage and querying of location-based data, allowing features like finding parks or playdates near a specific location.
 
+8. Community support and ecosystem: PostgreSQL benefits from a vibrant and active open-source community that continuously improves and enhances the database system. The community provides regular updates, security patches, and additional features. Moreover, PostgreSQL has a rich ecosystem of extensions and plugins that can be utilised to extend the functionality of the API and integrate with other technologies.
+
+Despite its strengths, PostgreSQL also has some drawbacks compared to other database systems:
+
+1. Performance: In certain scenarios, PostgreSQL's performance may be slightly lower than some other database systems like MySQL. However, this difference is often negligible and highly dependent on the specific use case and workload.
+
+2. Learning curve: PostgreSQL's advanced features and extensibility come at the cost of increased complexity. Developers who are unfamiliar with PostgreSQL may require some additional learning and training to make the most of its capabilities.
+
+3. Resource requirements: PostgreSQL may require more system resources (CPU, memory) compared to lighter-weight database systems. This consideration becomes relevant when deploying the API on limited hardware or in resource-constrained environments.
+
+4. Replication and clustering: While PostgreSQL offers replication and clustering capabilities, they might be more complex to set up and manage compared to some other database systems. Achieving high availability and scalability in distributed environments may require additional configuration and expertise.
 
 # R4 Identify and discuss the key functionalities and benefits of an ORM
 
