@@ -7,7 +7,7 @@ from blueprints.auth_bp import auth_bp
 from blueprints.dogs_bp import dogs_bp
 from blueprints.parks_bp import parks_bp
 from blueprints.events_bp import events_bp
-from marshmallow.exceptions import ValidationError
+# from marshmallow.exceptions import ValidationError, IntegrityError
 
 
 def setup():
@@ -45,9 +45,14 @@ def setup():
     def handle_401(err):
         return {'error': str(err)}, 401
     
-    # Handle schema validation errors
-    @app.errorhandler(ValidationError)
-    def handle_Validation_Error(err):
-        return {'error': err.__dict__['messages']}, 400
+    # # Handle schema validation errors
+    # @app.errorhandler(ValidationError)
+    # def handle_Validation_Error(err):
+    #     return {'error': err.__dict__['messages']}, 400
+    
+    # # Handle schema Integrity errors
+    # @app.errorhandler(IntegrityError)
+    # def handle_IntegrityError(err):
+    #     return {'error': err.__dict__['messages']}, 400
     
     return app

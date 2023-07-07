@@ -5,6 +5,7 @@ from models.event_user import Event_User, Event_UserSchema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from blueprints.auth_bp import admin_required, admin_or_owner_required
+from sqlalchemy.exc import IntegrityError
 
 events_bp = Blueprint('events', __name__, url_prefix='/events')
 
@@ -101,20 +102,54 @@ def get_event_attendees(event_id):
     event = db.session.scalar(db.select(Event).filter_by(id=event_id))
     attendees = db.session.scalars(db.select(Event_User).filter_by(event_id=event_id)).all()
     if event and attendees:
-        return {'event': EventSchema(exclude=['park_id', 'attendees']).dump(event), 'attendees': Event_UserSchema(many=True, only=['user_id']).dump(attendees)}
+        return {'event': EventSchema(exclude=['park_id', 'attendees']).dump(event), 'attendees': Event_UserSchema(many=True, only=['user_id']).dump(attendees)}, 200
     else:
         return {'error': 'We could not find the event you were looking for'}, 404
     
 # POST a new attendee into an event - CREATE request
-@events_bp.route('/<int:event_id>/attendees')
+@events_bp.route('/<int:event_id>/attendees', methods=['POST'])
 @jwt_required()
-def add_event_attendee(event_id)
-    new_attendee = Event_User(
-        date_created = date.today(),
-        event_id = event_id,
-        user_id = 
-    )
+def add_event_attendee(event_id):
+    try:
+        attendee_info = Event_UserSchema().load(request.json)
+        new_attendee = Event_User(
+            date_created = date.today(),
+            event_id = event_id,
+            user_id = attendee_info['user_id']
+        )
+        # Add and commit attendee as event attendee to the session
+        db.session.add(new_attendee)
+        db.session.commit()
+
+        event = db.session.scalar(db.select(Event).filter_by(id=event_id))
+        attendees = db.session.scalars(db.select(Event_User).filter_by(event_id=event_id)).all()
+        if event and attendees:
+            return {'event': EventSchema(exclude=['park_id', 'attendees']).dump(event), 'attendees': Event_UserSchema(many=True, only=['user_id']).dump(attendees), 'confirmation': f'User with user_ID {new_attendee.user_id} has been added to your event'}
+        else:
+            return {'error': 'We could not find the event you were looking for'}, 404
+    except IntegrityError:
+        return {'error': 'The user you specified does not exist'}, 409
     
-    # Add and commit the user as event attendee to the session
-    db.session.add(new_attendee)
-    db.session.commit()
+# DELETE an attendee from an event - DELETE request
+@events_bp.route('/<int:event_id>/attendees', methods=['DELETE'])
+@jwt_required()
+def delete_event_attendee(event_id):
+    admin_required()
+    try:
+        # Load the incoming DELETE data via the Schema
+        attendee_info = Event_UserSchema().load(request.json)
+        # 
+        stmt = db.select(Event_User).filter_by(event_id=event_id, user_id=attendee_info['user_id'])
+        deleted_attendee = db.session.scalar(stmt)
+
+        db.session.delete(deleted_attendee)
+        db.session.commit()
+
+        event = db.session.scalar(db.select(Event).filter_by(id=event_id))
+        attendees = db.session.scalars(db.select(Event_User).filter_by(event_id=event_id)).all()
+        if event and attendees:
+            return {'event': EventSchema(exclude=['park_id', 'attendees']).dump(event), 'attendees': Event_UserSchema(many=True, only=['user_id']).dump(attendees), 'confirmation': f'User with user_ID {deleted_attendee.user_id} has been removed from your event'}
+        else:
+            return {'error': 'We could not find the event you were looking for'}, 404
+    except IntegrityError:
+        return {'error': 'The attendee you specified does not exist'}, 409
