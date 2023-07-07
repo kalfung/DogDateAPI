@@ -155,36 +155,239 @@ Benefits of an ORM when working with relational databases include:
 
 # R5 Document all endpoints for your API
 
-/dogs/breed GET list of all dogs of a specific breed
+## Authentication
 
+POST `/register`
 
-/dogs/dogpark
+Create a new user to interact with the API
 
-/dogs/park GET list of all dogs that frequent a specific dog park
+- Methods: POST
+- Parameters: None
+- Headers: None
+- Response: 201
+- Response: 400
 
+![register](./docs/postman/users_register.PNG)
 
-/users/dogpark
+POST `/login`
 
-/users/park GET list of all users that frequent a specific dog park
+Log into your account to access a token to interact with the API
 
-GET, POST, PUT, DELETE, PATCH
+- Methods: POST
+- Parameters: None
+- Headers: None
+- Response: 200
+- Response: 400, 401
 
-CRUD create read update delete
+![login](./docs/postman/users_login.PNG)
 
-## Park
+PATCH `/users/{user_id}/grant-admin-access`
 
-### **GET** `/parks`
+Admins are allowed to grant admin access to a specified user
+*Admin credential required*
 
-Retrieves a list of all parks in the database. 
+- Methods: PATCH
+- Parameters: user_id Integer
+- Headers: Admin Authorisation {Bearer token}
+- Response: 202
+- Response: 401, 404
 
-- methods: **GET**
-- parameters: None
-- headers: Authorisation: {Bearer Token}
-- response: _200_
-- response: _401_
+![grant admin](./docs/postman/users_grant_admin.PNG)
 
-![get all cards](./docs/postman/parks_GET.PNG)
+PATCH `/users/{user_id}/remove-admin-access`
 
+Admins are allowed to remove admin access from a specified user
+*Admin credential required*
+
+- Methods: PATCH
+- Parameters: user_id Integer
+- Headers: Admin Authorisation {Bearer token}
+- Response: 202
+- Response: 401, 404
+
+![remove admin](./docs/postman/users_remove_admin.PNG)
+
+PUT or PATCH `/users/{user_id}`
+
+Admins are allowed to update the record of a specific user
+*Admin credentials required*
+
+- Methods: PUT, PATCH
+- Parameters: user_id Integer
+- Headers: Admin Authorisation {Bearer token}
+- Response: 200
+- Response: 401, 404
+
+![update user](./docs/postman/users_update.PNG)
+
+GET `/users`
+
+Admins are allowed retrieve a list of all users in the database.
+*Admin credentials are required*
+
+- Methods: GET
+- Parameters: None
+- Headers: Admin Authorisation {Bearer token}
+- Response: 200
+- Response: 401
+
+![get all users](./docs/postman/users_GET_all.PNG)
+
+GET `/users/{user_id}`
+
+Retrieve just one user from the database
+
+- Methods: GET
+- Parameters: user_id Integer
+- Headers: Authorisation {Bearer token}
+- Response: 200
+- Response: 401
+
+![get one user](./docs/postman/users_GET_one.PNG)
+
+DELETE `/users/{user_id}`
+
+Admins are allowed to delete a single user from the database
+
+- Methods: DELETE
+- Parameters: user_id Integer
+- Headers: Admin Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![delete one user](./docs/postman/users_DELETE.PNG)
+
+## Dogs
+
+GET `/dogs`
+
+Retrieves a list of all dogs in the database.
+
+- Methods: GET
+- Parameters: None
+- Headers: Authorisation {Bearer token}
+- Response: 200
+- Response: 401
+
+![get all dogs](./docs/postman/dogs_GET_all.PNG)
+
+GET `/dogs/{dog_id}`
+
+Retrieves a single dog from the database
+
+- Methods: GET
+- Parameters: dog_id Integer
+- Headers: Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![get one dog](./docs/postman/dogs_GET_one.PNG)
+
+POST `/dogs/`
+
+Users can create an entry for a dog that they own
+
+- Methods: POST
+- Parameters: None
+- Headers: Authorisation {Bearer token}
+- Response: 201
+- Response: 400, 401
+
+![post new dog](./docs/postman/dogs_POST.PNG)
+
+PUT or PATCH `/dogs/{dog_id}`
+
+Admins or owner can update a dog in the database
+*Admin or owner credential required*
+
+- Methods: PUT, PATCH
+- Parameters: dog_id Integer
+- Headers: Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![patch dog](./docs/postman/dogs_PATCH.PNG)
+
+DELETE `/dogs/{dog_id}`
+
+Admins or owner can delete a dog in the database
+*Admin or owner credential required*
+
+- Methods: DELETE
+- Parameters: dog_id Integer
+- Headers: Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![delete dog](./docs/postman/dogs_DELETE.PNG)
+
+## Parks
+
+GET `/parks`
+
+Retrieves a list of all parks in the database.
+
+- Methods: GET
+- Parameters: None
+- Headers: Authorisation {Bearer token}
+- Response: 200
+- Response: 401
+
+![get all parks](./docs/postman/parks_GET.PNG)
+
+GET `/parks/{park_id}`
+
+Retrieves a single park from the database
+
+- Methods: GET
+- Parameters: park_id Integer
+- Headers: Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![get one park](./docs/postman/parks_GET_one.PNG)
+
+POST `/parks/`
+
+Admins can create an entry for a park to add to the database
+
+*Admin credentials required*
+
+- Methods: POST
+- Parameters: None
+- Headers: Admin Authorisation {Bearer token}
+- Response: 201
+- Response: 400, 401
+
+![post new park](./docs/postman/parks_POST.PNG)
+
+PUT or PATCH `/parks/{park_id}`
+
+Admins can update a park in the database
+
+*Admin credentials required*
+
+- Methods: PUT, PATCH
+- Parameters: park_id Integer
+- Headers: Admin Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![patch park](./docs/postman/parks_PATCH.PNG)
+
+DELETE `/parks/{park_id}`
+
+Admins can delete a park in the database
+
+*Admin or owner credential required*
+
+- Methods: DELETE
+- Parameters: park_id Integer
+- Headers: Admin Authorisation {Bearer token}
+- Response: 200
+- Response: 404
+
+![delete park](./docs/postman/parks_DELETE.PNG)
 
 
 # R6 An ERD for your *app*
@@ -227,21 +430,51 @@ Python-dotenv is a Python library that simplifies the management of environment 
 
 # R8 Describe your project's *models* in terms of the relationships they have with each other
 
+For each of the following models in the project, relationships were established using the SQLAlchemy relationship() method in the models for whom their Primary Key IDs were referenced as foreign keys in other models. 
+
 **User**
 
 Represents a user of the API, typically a dog owner. It has a one-to-many relationship with the Dog model since a user can have multiple dogs, but each dog can only have one user. Additionally, a user has a one-to-many relationship with the Event model because a single user can create multiple events, but each event can only have one creator.
+
+```python
+    # Relationship between owners and their dogs
+    dogs = db.relationship('Dog', back_populates='owner', cascade='all, delete')
+    # Relationship between users and the events they create
+    events_created = db.relationship('Event', back_populates='event_creator', cascade='all, delete')
+```
 
 **Dog**
 
 Represents a dog participating in the play dates and meet-ups. It has a many-to-one relationship with the User model since multiple dogs can belong to a single user, but each dog can only have one user. 
 
+```python
+    # Relationship between dogs and their owners
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    owner = db.relationship('User', back_populates='dogs')
+```
+
 **Park**
 
 Represents a dog park or other venue where the dog play dates or meet-ups occur. It has a one-to-many relationship with the Event model because multiple events can take place in a single park, but a single play date or meet-up can only occur in one park.
 
+```python
+    # Relationship between parks and their events
+    events = db.relationship('Event', back_populates='park', cascade='all, delete')
+```
+
 **Event**
 
 Represents a specific play date or meet-up event. It has a many-to-one relationship with both the User and Park models. Each event is associated with a single user that created or organised the event, and takes places in a specific park. 
+
+```python
+    # relationship between events and the users that create them
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
+    event_creator = db.relationship('User', back_populates='events_created')
+
+    # relationship between events and the venue
+    park_id = db.Column(db.Integer(), db.ForeignKey('parks.id'), nullable=False)
+    park = db.relationship('Park', back_populates='events')
+```
 
 **Event User**
 
@@ -250,6 +483,8 @@ While the event creator user would have a one-to-many relationship with the Even
 # R9 Discuss the database relations to be implemented in your application
 
 ![ERD relationships](./docs/DogDateAPI_ERD_relationships.png)
+
+
 
 
 foreign keys etc

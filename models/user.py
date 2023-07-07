@@ -4,13 +4,6 @@ from marshmallow.validate import Length, And, Regexp
 from datetime import date, datetime
 from time import time_ns
 
-# THIS IS IN THE WRONG PLACE EVEN IF IT DID WORK
-class EpochDateTime(fields.Field):
-    def _serialize(self, value, attr, obj, **kwargs):
-        if value is None:
-            return None
-        return datetime.datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")
-
 class User(db.Model):
     __tablename__= 'users'
 
@@ -23,7 +16,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     # Creating user role. A new user by default will not be an admin
     is_admin = db.Column(db.Boolean, default=False)
-    date_created = db.Column(db.BigInteger, nullable=False)
+    date_created = db.Column(db.Date, nullable=False)
 
     # Relationship between owners and their dogs
     dogs = db.relationship('Dog', back_populates='owner', cascade='all, delete')
@@ -57,7 +50,7 @@ class UserSchema(ma.Schema):
     ))
     password = fields.String(validate=Length(min=8, error='Password must be at least 8 characters long'))
     is_admin = fields.Boolean(default=False)
-    date_created = fields.Integer(load_default=time_ns())
+    date_created = fields.Date(load_default=date.today())
     class Meta:
         fields = ('id', 'email', 'username', 'f_name', 'l_name', 'password', 'is_admin', 'date_created', 'dogs', 'events_created')
         ordered = True

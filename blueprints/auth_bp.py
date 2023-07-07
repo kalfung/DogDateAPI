@@ -1,7 +1,6 @@
 from flask import Blueprint, request, abort
 from init import db, bcrypt
-from datetime import timedelta
-from time import time_ns
+from datetime import timedelta, date
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from models.user import User, UserSchema
@@ -13,6 +12,7 @@ auth_bp = Blueprint('auth', __name__)
 @jwt_required()
 def all_users():
     admin_required()
+    # Select all rows in the 
     stmt = db.select(User).order_by(User.id)
     users = db.session.scalars(stmt)
     return UserSchema(many=True, exclude=['password']).dump(users)
@@ -40,7 +40,7 @@ def register_user():
             l_name = user_info['l_name'],
             password = bcrypt.generate_password_hash(user_info['password']).decode('utf8'),
             is_admin = False,
-            date_created = time_ns()
+            date_created = date.today()
         )
 
         # Add and commit the new user

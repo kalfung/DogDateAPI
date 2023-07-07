@@ -2,7 +2,6 @@ from flask import Blueprint, request
 from init import db
 from models.park import Park, ParkSchema
 from datetime import date
-from time import time_ns
 from flask_jwt_extended import jwt_required
 from blueprints.auth_bp import admin_required
 
@@ -10,13 +9,15 @@ parks_bp = Blueprint('parks', __name__, url_prefix='/parks')
 
 # GET all parks - READ request
 @parks_bp.route('/')
+@jwt_required()
 def all_parks():
-    stmt = db.select(Park).order_by(Park.id) # could order_by name instead
+    stmt = db.select(Park).order_by(Park.id)
     parks = db.session.scalars(stmt).all()
     return ParkSchema(many=True).dump(parks)
 
 # GET one park - READ request
 @parks_bp.route('/<int:park_id>')
+@jwt_required()
 def get_one_park(park_id):
     stmt = db.select(Park).filter_by(id=park_id)
     park = db.session.scalar(stmt)
@@ -29,6 +30,7 @@ def get_one_park(park_id):
 @parks_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_park():
+    admin_required()
     # Load the incoming POST data via the schema
     park_info = ParkSchema().load(request.json)
     # Create a new Park instance from the park_info

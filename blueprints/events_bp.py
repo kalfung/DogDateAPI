@@ -13,6 +13,7 @@ events_bp = Blueprint('events', __name__, url_prefix='/events')
 @events_bp.route('/')
 @jwt_required()
 def all_events():
+    admin_required()
     stmt = db.select(Event).order_by(Event.id) # could order_by name instead
     events = db.session.scalars(stmt).all()
     return EventSchema(many=True).dump(events)
@@ -110,6 +111,7 @@ def get_event_attendees(event_id):
 @events_bp.route('/<int:event_id>/attendees', methods=['POST'])
 @jwt_required()
 def add_event_attendee(event_id):
+    admin_required()
     try:
         attendee_info = Event_UserSchema().load(request.json)
         new_attendee = Event_User(

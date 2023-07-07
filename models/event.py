@@ -20,13 +20,6 @@ class Event(db.Model):
     park_id = db.Column(db.Integer(), db.ForeignKey('parks.id'), nullable=False)
     park = db.relationship('Park', back_populates='events')
 
-    # relationship between events and the attendees in event_user table NOT WORKING
-    # attendees = db.relationship('User', secondary='event_user', backref='events_attending')
-    # attendees = db.relationship('User', secondary='events_users', backref=db.backref('events'))
-
-    # def __repr__(self):
-    #     return f'<Event "{self.title} {self.description}">'
-
 class EventSchema(ma.Schema):
     # Tell Marshmallow to use UserSchema to serialise the 'event_creator' field
     event_creator = fields.Nested('UserSchema', only=['username', 'f_name', 'id'])
