@@ -14,7 +14,8 @@ events_bp = Blueprint('events', __name__, url_prefix='/events')
 @jwt_required()
 def all_events():
     admin_required()
-    stmt = db.select(Event).order_by(Event.id) # could order_by name instead
+    # Gets all records in events table
+    stmt = db.select(Event).order_by(Event.id)
     events = db.session.scalars(stmt).all()
     return EventSchema(many=True).dump(events)
 
@@ -22,6 +23,7 @@ def all_events():
 @events_bp.route('/<int:event_id>')
 @jwt_required()
 def get_one_event(event_id):
+    # Gets the record in the events table where event_id matches the specified event_id
     stmt = db.select(Event).filter_by(id=event_id)
     event = db.session.scalar(stmt)
     if event:
@@ -67,9 +69,11 @@ def create_event():
 @events_bp.route('/<int:event_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_event(event_id):
+    # Load the incoming PATCH data via the schema
     event_info = EventSchema().load(request.json)
     stmt = db.select(Event).filter_by(id=event_id)
     event = db.session.scalar(stmt)
+    # If the event exists, stage then commit the changes
     if event:
         admin_or_owner_required(event.event_creator.id)      
         event.title = event_info.get('title', event.title)
@@ -86,8 +90,10 @@ def update_event(event_id):
 @events_bp.route('/<int:event_id>', methods=['DELETE'])
 @jwt_required()
 def delete_event(event_id):
+    # Search for a record in events table that matches the give event_id
     stmt = db.select(Event).filter_by(id=event_id)
     event = db.session.scalar(stmt)
+    # Queues up the found event record then commits the deletion
     if event:
         admin_or_owner_required(event.event_creator.id)
         db.session.delete(event)
@@ -100,8 +106,10 @@ def delete_event(event_id):
 @events_bp.route('/<int:event_id>/attendees')
 @jwt_required()
 def get_event_attendees(event_id):
+    # Searches in both the events and events_users table for records matching the given event_id
     event = db.session.scalar(db.select(Event).filter_by(id=event_id))
     attendees = db.session.scalars(db.select(Event_User).filter_by(event_id=event_id)).all()
+    # then returns the results as a list of dictionaries
     if event and attendees:
         return {'event': EventSchema(exclude=['park_id', 'attendees']).dump(event), 'attendees': Event_UserSchema(many=True, only=['user_id']).dump(attendees)}, 200
     else:
@@ -140,7 +148,7 @@ def delete_event_attendee(event_id):
     try:
         # Load the incoming DELETE data via the Schema
         attendee_info = Event_UserSchema().load(request.json)
-        # 
+        # searches the events_users table for a record matching both the event_id and attendee's user_id
         stmt = db.select(Event_User).filter_by(event_id=event_id, user_id=attendee_info['user_id'])
         deleted_attendee = db.session.scalar(stmt)
 

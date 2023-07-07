@@ -591,10 +591,11 @@ While the event creator user would have a one-to-many relationship with the Even
 
 ![ERD relationships](./docs/DogDateAPI_ERD_relationships.png)
 
+Because the users and parks entities contain no foreign keys, they were created first. Because a user can have multiple dogs, the dogs entity contains a foreign key that links to the primary key in the users entity (highlighted in purple).
 
+Because events can only have one creator, the events entity contains a foreign key that links to the primary key in the users entity (highlighted in pink). The parks have a one-to-many relationship with the events entity, so the events entity also contains a foreign key that links to the primary key in the parks entity (highlighted in orange). 
 
-
-foreign keys etc
+However, because there is a many to many relationship between events and the attendee users, the events_users entity was also created containing foreigns keys that link to the primary keys in both  the users and events enitities (green and blue respectively).
 
 # R10 Describe the way tasks are allocated and tracked in your project
 
