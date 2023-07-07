@@ -117,6 +117,42 @@ Despite its strengths, PostgreSQL also has some drawbacks compared to other data
 
 # R4 Identify and discuss the key functionalities and benefits of an ORM
 
+## Functionality
+
+Some of the key functionalities of an ORM include:
+
+1. Object-Relational Mapping: The primary function of an ORM is to map the relational data model to objects in an application. It automatically converts database tables, columns, and relationships into corresponding classes, attributes, and associations in the programming language of choice.
+
+2. Data Manipulation: ORM tools provide methods and APIs to perform common database operations, such as creating, retrieving, updating, and deleting records (often referred to as CRUD operations). Developers can work with objects and use ORM methods to perform these operations, abstracting away the underlying SQL statements.
+
+3. Querying and Filtering: ORM frameworks typically offer query language abstractions that allow developers to construct complex database queries using object-oriented syntax. Instead of writing raw SQL queries, developers can use ORM query methods to retrieve specific data based on conditions, perform aggregations, and join tables.
+
+4. Transaction Management: ORM tools provide transaction management capabilities, allowing developers to group a set of database operations into a single transaction. Transactions ensure the atomicity, consistency, isolation, and durability (ACID) properties of database operations, ensuring data integrity and preventing issues such as partial updates or data inconsistencies.
+
+5. Relationship Management: One of the core features of an ORM is managing relationships between objects and database tables. ORM frameworks handle associations like one-to-one, one-to-many, and many-to-many relationships, automatically fetching related data and managing foreign key constraints.
+
+6. Schema Migrations: ORM frameworks often include functionality for managing database schema changes over time. They provide migration tools that allow developers to define and execute database schema modifications, such as creating tables, adding or modifying columns, and establishing relationships, while preserving existing data.
+
+7. Performance Optimisation: ORM tools often include performance optimisation features, such as caching, lazy loading, and query optimisation. These features aim to reduce the number of database queries and improve the overall performance of the application by minimising unnecessary round trips to the database.
+
+8. Database Agnosticism: Many ORM frameworks strive to be database-agnostic, meaning they can work with multiple database systems, including PostgreSQL, MySQL, SQLite, and others. This allows developers to switch between different databases without modifying their application code significantly.
+
+ORMs provide a convenient and productive way to interact with databases by abstracting away much of the low-level SQL and database-specific details. They simplify database operations, reduce boilerplate code, and promote cleaner, more maintainable code.
+
+## Benefits
+
+Benefits of an ORM when working with relational databases include:
+
+1. Productivity and Code Maintainability: ORM frameworks provide a higher-level abstraction that allows developers to work with objects instead of writing raw SQL queries. This abstraction simplifies database interactions, reduces the amount of boilerplate code, and promotes cleaner and more maintainable code. Developers can focus on business logic rather than dealing with low-level database operations.
+
+2. Object-Oriented Programming Paradigm: ORM bridges the gap between the object-oriented programming model and the relational database model. It allows developers to directly work with objects and relationships, providing a more natural and intuitive way to represent and manipulate data in the application code.
+
+3. Data Abstraction: ORM provides a layer of abstraction that shields developers from the complexities of database-specific operations and optimisations. Developers can focus on the logical structure of the data and interact with it using object-oriented concepts, rather than getting into the intricacies of SQL syntax or database-specific features.
+
+4. Schema Migration and Version Control: ORM tools often include functionality for managing database schema changes over time. They provide migration tools that allow developers to define and execute database schema modifications while preserving existing data. This makes it easier to evolve the database schema alongside application development and integrate schema changes into version control systems.
+
+5. Testing and Mocking: ORM's abstraction layer simplifies the testing process by allowing developers to work with mock objects or in-memory databases during testing. This promotes easier unit testing and facilitates the isolation of database interactions from the rest of the application logic.
+
 # R5 Document all endpoints for your API
 
 /dogs/breed GET list of all dogs of a specific breed
@@ -153,11 +189,7 @@ Retrieves a list of all parks in the database.
 
 # R6 An ERD for your *app*
 
-Users:
-- name
-- parks frequented (users_parks)
-- dogs owned (users_dogs)
-- 
+![ERD for dog date API](./docs/ERD%20from%20draw%20io.png)
 
 # R7 Detail any third party services that your *app* will use
 

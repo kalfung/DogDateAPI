@@ -16,6 +16,7 @@ class Event_User(db.Model):
 
 class Event_UserSchema(ma.Schema):
 #     # Validators
+    date_created = fields.Date()
     event_id = fields.Integer(validation=Range(min=1))
     user_id = fields.Integer(validation=Range(min=1))
 
