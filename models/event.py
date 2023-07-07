@@ -22,7 +22,7 @@ class Event(db.Model):
 
     # relationship between events and the attendees in event_user table NOT WORKING
     # attendees = db.relationship('User', secondary='event_user', backref='events_attending')
-    attendees = db.relationship('User', secondary='events_users', backref=db.backref('events'))
+    # attendees = db.relationship('User', secondary='events_users', backref=db.backref('events'))
 
     # def __repr__(self):
     #     return f'<Event "{self.title} {self.description}">'

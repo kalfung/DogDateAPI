@@ -26,24 +26,6 @@ def get_one_event(event_id):
         return EventSchema().dump(event)
     else:
         return {'error': 'We could not find the event you were looking for'}, 404
-
-# GET one event with attendees THIS ROUTE ISN'T WORKING
-@events_bp.route('/events/<int:event_id>/users', methods=['GET'])
-@jwt_required()
-def get_event_users(event_id):
-    event_users = db.select(Event_User).query.filter_by(event_id=event_id).all()
-    event_user_schema = Event_UserSchema(many=True)
-    result = event_user_schema.dump(event_users)
-
-    user_ids = [event_user.user_id for event_user in event_users]
-    users = User.query.filter(User.id.in_(user_ids)).all()
-    user_schema = UserSchema(many=True)
-    users_result = user_schema.dump(users)
-
-    for event_user, user_result in zip(result, users_result):
-        event_user['user'] = user_result
-
-    return jsonify(result)
     
 # POST new event - CREATE request
 @events_bp.route('/', methods=['POST'])
@@ -111,3 +93,28 @@ def delete_event(event_id):
         return {'confirmation': f'{event.title} has been deleted'}, 200
     else:
         return {'error': 'We could not find the event you were looking for'}, 404
+    
+# GET the attendees of one event - READ request
+@events_bp.route('/<int:event_id>/attendees')
+@jwt_required()
+def get_event_attendees(event_id):
+    event = db.session.scalar(db.select(Event).filter_by(id=event_id))
+    attendees = db.session.scalars(db.select(Event_User).filter_by(event_id=event_id)).all()
+    if event and attendees:
+        return {'event': EventSchema(exclude=['park_id', 'attendees']).dump(event), 'attendees': Event_UserSchema(many=True, only=['user_id']).dump(attendees)}
+    else:
+        return {'error': 'We could not find the event you were looking for'}, 404
+    
+# POST a new attendee into an event - CREATE request
+@events_bp.route('/<int:event_id>/attendees')
+@jwt_required()
+def add_event_attendee(event_id)
+    new_attendee = Event_User(
+        date_created = date.today(),
+        event_id = event_id,
+        user_id = 
+    )
+    
+    # Add and commit the user as event attendee to the session
+    db.session.add(new_attendee)
+    db.session.commit()
