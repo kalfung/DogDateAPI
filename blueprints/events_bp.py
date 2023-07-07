@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from init import db
 from models.event import Event, EventSchema
-from models.event_user import Event_User
+from models.event_user import Event_User, Event_UserSchema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from blueprints.auth_bp import admin_required, admin_or_owner_required
@@ -26,6 +26,24 @@ def get_one_event(event_id):
         return EventSchema().dump(event)
     else:
         return {'error': 'We could not find the event you were looking for'}, 404
+
+# GET one event with attendees THIS ROUTE ISN'T WORKING
+@events_bp.route('/events/<int:event_id>/users', methods=['GET'])
+@jwt_required()
+def get_event_users(event_id):
+    event_users = db.select(Event_User).query.filter_by(event_id=event_id).all()
+    event_user_schema = Event_UserSchema(many=True)
+    result = event_user_schema.dump(event_users)
+
+    user_ids = [event_user.user_id for event_user in event_users]
+    users = User.query.filter(User.id.in_(user_ids)).all()
+    user_schema = UserSchema(many=True)
+    users_result = user_schema.dump(users)
+
+    for event_user, user_result in zip(result, users_result):
+        event_user['user'] = user_result
+
+    return jsonify(result)
     
 # POST new event - CREATE request
 @events_bp.route('/', methods=['POST'])

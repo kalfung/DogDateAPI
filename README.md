@@ -18,15 +18,24 @@ Connect to a
 psql
 ```
 
-# R1 Identification of the *problem* you are trying to solve by building this particular *app*.
+# R1 and R2 Identification of the *problems* you are trying to solve by building this particular *app*.
 
-This app is for organising dog play dates and meet-ups for dog owners.
+Some people, like myself, find it easier to meet new people through their dogs. The creation of a web server API for creating dog play dates and meet-ups could solve several problems related to organising and facilitating interactions between dog owners and their pets. Some potential problems that this API could address include:
 
-Some people, like myself, find it easier to meet new people through their dogs. This app will allow dog owners to arrange social events.
+1. Finding compatible playmates: Some dog owners often struggle to find suitable playmates for their pets. They may rely on chance encounters at dog parks or rely on word-of-mouth recommendations. An API could provide a centralised platform where owners can connect and schedule dog playdates, improving coordination and ensuring a better social experience for their pets.
 
-Because of the Covid-19 pandemic, fewer people visited dog parks. 
+2. Time-consuming search: Searching for compatible dog playmates can be time-consuming and inefficient. An API could allow users to input preferences such as dog size, breed, temperament, location, and availability, and then match them with other owners who meet their criteria. This would save time and effort in finding suitable companions for their dogs.
 
-# R2 Why is it a *problem* that needs solving?
+3. Limited socialisation opportunities: Some dog owners may have limited access to dog parks or other socialisation events due to location, schedule, or other constraints. An API could help them expand their network by connecting with other owners nearby or even in different geographical locations, increasing their dogs' socialisation opportunities.
+
+4. Safety concerns: When arranging dog playdates independently, there can be concerns about the safety and compatibility of the dogs involved. The API could potentially include features such as user ratings, reviews, and verification processes to ensure a safer environment for the dogs, reducing the risk of negative interactions.
+
+5. Schedule management: Keeping track of scheduled playdates and managing appointments can be challenging. An API could provide features for scheduling, reminders, and notifications, allowing users to manage their dog's social calendar more efficiently.
+
+6. Community engagement: Creating an API for dog dates could foster a sense of community among dog owners. It could include social features such as forums, chat functionality, and user profiles, encouraging interactions, knowledge sharing, and the formation of dog owner communities.
+
+Overall, a web server API for creating dog dates could enhance the dog-owning experience by addressing coordination challenges, expanding socialisation opportunities, improving safety, and promoting a sense of community among dog owners.
+
 
 
 

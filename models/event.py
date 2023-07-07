@@ -22,6 +22,7 @@ class Event(db.Model):
 
     # relationship between events and the attendees in event_user table NOT WORKING
     # attendees = db.relationship('User', secondary='event_user', backref='events_attending')
+    attendees = db.relationship('User', secondary='events_users', backref=db.backref('events'))
 
     # def __repr__(self):
     #     return f'<Event "{self.title} {self.description}">'
@@ -29,8 +30,11 @@ class Event(db.Model):
 class EventSchema(ma.Schema):
     # Tell Marshmallow to use UserSchema to serialise the 'event_creator' field
     event_creator = fields.Nested('UserSchema', only=['username', 'f_name', 'id'])
-    # Tell Marshmallow to user ParkSchema to serialise the 'park' field
+    # Tell Marshmallow to use ParkSchema to serialise the 'park' field
     park = fields.Nested('ParkSchema', only=['name'])
+    # Tell Marshmallow to use Event_UserSchema to serialise the 'attendees' field
+    attendees = fields.Nested('Event_UserSchema')
+
     # Validators
     title = fields.String(validate=And(
         Length(min=4, max=100, error='Title of the event must be at least 4 characters long, and no more than 100 characters'),

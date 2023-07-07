@@ -15,11 +15,11 @@ class Event_User(db.Model):
 
 
 class Event_UserSchema(ma.Schema):
-#     # Validators UNSURE WHAT THE BELOW 2 LINES DO
-#     event_id = fields.Integer(validation=Range(min=1))
-#     user_id = fields.Integer(validation=Range(min=1))
+#     # Validators
+    event_id = fields.Integer(validation=Range(min=1))
+    user_id = fields.Integer(validation=Range(min=1))
 
-    event = fields.Nested('EventSchema')
-    attendees = fields.List(fields.Nested('UserSchema'))
+    # event = fields.Nested('EventSchema')
+    # attendees = fields.List(fields.Nested('UserSchema'))
     class Meta:
         fields = ('id', 'date_created', 'event_id', 'user_id', 'event', 'attendees')
