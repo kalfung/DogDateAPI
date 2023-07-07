@@ -83,16 +83,26 @@ Some people, like myself, find it easier to meet new people through their dogs. 
 
 6. Community engagement: Creating an API for dog dates could foster a sense of community among dog owners. It could include social features such as forums, chat functionality, and user profiles, encouraging interactions, knowledge sharing, and the formation of dog owner communities.
 
-Overall, a web server API for creating dog dates could enhance the dog-owning experience by addressing coordination challenges, expanding socialisation opportunities, improving safety, and promoting a sense of community among dog owners.
-
-
-
+Overall, this dog play dates a web server API could enhance the dog-owning experience by addressing coordination challenges, expanding socialisation opportunities, improving safety, and promoting a sense of community among dog owners.
 
 # R3 Why have you chosen this database system. What are the drawbacks compared to others?
 
-I have chosen the PostgreSQL database system because it is a relational database system. The tables 
+I have chosen the PostgreSQL relational database system for this API project due to the following reasons:
 
-pros vs cons compared to other systems
+1. Data organisation: An RDBMS like PostgreSQL facilitates the organisation of data in a tabular format using tables, rows, and columns. This is beneficial for managing various aspects of a dog playdates API, such as user profiles, dog information, playdate schedules, and the relationships between these different entities.
+
+2. Data integrity: PostgreSQL provides robust support for enforcing data integrity through features such as primary keys, foreign keys, and constraints. This ensures that the data stored in the database remains consistent and accurate, preventing issues like orphaned records or data inconsistencies.
+
+3. Querying and indexing: PostgreSQL offers a powerful query language (SQL) that allows me to retrieve, manipulate, and filter data efficiently. I can leverage SQL queries to retrieve specific information from the database, perform complex joins, aggregate data, and sort results. Additionally, PostgreSQL provides various indexing options to optimise query performance, enabling faster retrieval of data for the API.
+
+4. Data relationships and associations: A dog playdates API involves managing relationships between different entities, such as users, dogs, parks, and playdate events. PostgreSQL's support for relational data modelling allows me to define and manage these associations using foreign keys and table relationships, facilitating efficient retrieval and manipulation of related data.
+
+5. ACID compliance: PostgreSQL adheres to ACID (Atomicity, Consistency, Isolation, Durability) principles, ensuring that database transactions are processed reliably and consistently. This guarantees that each transaction is treated as a single, indivisible unit, maintaining data integrity and protecting against data inconsistencies in case of failures or concurrent access.
+
+6. Scalability: PostgreSQL is designed to handle large datasets and concurrent access effectively. It offers mechanisms for horizontal scalability through features like table partitioning and replication, allowing the dog playdates API to scale as the user base and data volume increase.
+
+7. Community support and ecosystem: PostgreSQL benefits from a vibrant and active open-source community that continuously improves and enhances the database system. The community provides regular updates, security patches, and additional features. Moreover, PostgreSQL has a rich ecosystem of extensions and plugins that can be utilised to extend the functionality of the API and integrate with other technologies.
+
 
 # R4 Identify and discuss the key functionalities and benefits of an ORM
 
