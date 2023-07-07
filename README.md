@@ -189,11 +189,45 @@ Retrieves a list of all parks in the database.
 
 # R6 An ERD for your *app*
 
-![ERD for dog date API](./docs/ERD%20from%20draw%20io.png)
+![ERD for dog date API](./docs/DogDateAPI_ERD.png)
 
 # R7 Detail any third party services that your *app* will use
 
+**Flask**
+
+Flask is a lightweight and flexible web framework for building web server APIs. It is written in Python and provides a simple and intuitive interface for developers. Flask is used in this app to handle routing, request handling, and response generation. It also supports various extensions, allowing database integration and authentication. Flask's simplicity and extensive documentation make it the best choice for creating a RESTful API for this app.
+
+**Flask-Bcrypt** 
+
+Flask-Bcrypt is a Flask extension that simplifies the process of hashing passwords in web server APIs. It integrates the bcrypt hashing algorithm into Flask, which is known for its strong security. By using Flask-Bcrypt, this app can easily generate secure hash representations of passwords, making them more resistant to attacks. It provides functions for hashing passwords during user registration and for comparing hashed passwords during user authentication. Flask-Bcrypt ensures that password handling is done securely, adding an additional layer of protection to the Dog Date API when dealing with sensitive user information.
+
+**Flask-JWT-Extended**
+
+Flask-JWT-Extended is a Flask extension that simplifies the implementation of authentication and JSON Web Tokens (JWT) in web server APIs. It provides a straightforward way to handle user authentication and authorisation. With Flask-JWT-Extended, the Dog Date API app generates JWTs upon user login, which can then be used for subsequent API requests to verify the user's identity and access rights. It supports features like token expiration, token refreshing, and role-based access control.
+
+**Flask-SQLAlchemy**
+
+Flask-SQLAlchemy is a Flask extension that simplifies the use of Object-Relational Mapping (ORM) when building web server APIs. It provides an intuitive interface for interacting with databases using SQLAlchemy, a powerful ORM library. With Flask-SQLAlchemy, the Dog Date API's database models can be defined as Python classes, allowing for easy manipulation and querying of data. It handles the mapping between the objects and the underlying database tables, abstracting away the complexities of SQL.
+
+**Flask-Marshmallow**
+
+Flask-Marshmallow is a Flask extension that simplifies the process of serialising and deserialising data when building web server APIs. It integrates Marshmallow, a powerful library for object serialisation, into Flask. With Flask-Marshmallow, we can define schemas within the Dog Date API app that specify how data should be validated, formatted, and transformed before being sent over the API or stored in a database. It also provides easy integration with Flask-SQLAlchemy, allowing for seamless serialisation of SQLAlchemy models.
+
+**PostgreSQL**
+
+PostgreSQL is a reliable and feature-rich Relational Database Management System (RDBMS) often used when building web server APIs. It offers advanced data integrity and transaction management capabilities, making it suitable for handling complex data relationships. With support for JSON data types, full-text search, and spatial data, PostgreSQL provides flexibility in storing and querying diverse data formats. Its open-source nature and active community ensure regular updates and strong security measures. PostgreSQL integrates well with popular web frameworks like Flask and provides efficient data storage and retrieval, which made it the perfect choice for building the Dog Date API webserver.
+
+**Psycopg2-binary**
+
+Psycopg2-binary is a PostgreSQL adapter for Python that facilitates communication between a web server API and a PostgreSQL database. It allows the DogDate API app to interact with the database by executing SQL queries, fetching results, and managing transactions. Psycopg2-binary provides a high-performance and efficient way to connect to PostgreSQL databases, ensuring reliable and secure data operations. It handles data type conversions and supports features like connection pooling and server-side cursors, optimising the performance of database interactions.
+
+**Python-dotenv**
+
+Python-dotenv is a Python library that simplifies the management of environment variables in web server APIs. It allows developers to store sensitive configuration variables, such as database credentials or API keys, in a separate .env file. Python-dotenv automatically loads these variables into the application's environment, making them accessible within the API code. This approach enhances security by keeping sensitive information separate from the source code and allows for easy deployment across different environments.
+
 # R8 Describe your project's *models* in terms of the relationships they have with each other
+
+
 
 Models include:
 - users
